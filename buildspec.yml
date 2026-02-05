@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - npm install
+  build:
+    commands:
+      - npm run build
+  post_build:
+    commands:
+      - aws ssm send-command \
+        --document-name "AWS-RunShellScript" \
+        --targets "Key=tag:Name,Values=frontend-public-ec2" \
+        --parameters 'commands=[
+          "rm -rf /var/www/html/*",
+          "cp -r build/* /var/www/html/",
+          "systemctl restart nginx"
+        ]'
