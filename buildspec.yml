@@ -5,17 +5,27 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
+      - echo "Installing dependencies"
       - npm install
+
   build:
     commands:
+      - echo "Building React app"
       - npm run build
+
   post_build:
     commands:
+      - echo "Deploying to frontend EC2 via SSM"
       - aws ssm send-command \
-        --document-name "AWS-RunShellScript" \
-        --targets "Key=tag:Name,Values=frontend-public-ec2" \
-        --parameters 'commands=[
-          "rm -rf /var/www/html/*",
-          "cp -r build/* /var/www/html/",
-          "systemctl restart nginx"
-        ]'
+          --document-name "AWS-RunShellScript" \
+          --targets "Key=tag:Name,Values=frontend-public-ec2" \
+          --comment "Deploy React frontend" \
+          --parameters 'commands=[
+            "sudo rm -rf /var/www/html/*",
+            "sudo cp -r build/* /var/www/html/",
+            "sudo systemctl restart nginx"
+          ]'
+
+artifacts:
+  files:
+    - '**/*'
