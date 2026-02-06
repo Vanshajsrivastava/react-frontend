@@ -5,25 +5,16 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
-<<<<<<< HEAD
       - echo "Installing dependencies"
-=======
-      - echo Installing frontend dependencies
->>>>>>> 4872bba33aaf97f93d8f945770a7cbcd10d88e4e
       - npm install
 
   build:
     commands:
-<<<<<<< HEAD
       - echo "Building React app"
-=======
-      - echo Building React application
->>>>>>> 4872bba33aaf97f93d8f945770a7cbcd10d88e4e
       - npm run build
 
   post_build:
     commands:
-<<<<<<< HEAD
       - echo "Deploying to frontend EC2 via SSM"
       - aws ssm send-command \
           --document-name "AWS-RunShellScript" \
@@ -36,11 +27,5 @@ phases:
           ]'
 
 artifacts:
-=======
-      - echo Frontend build completed on `date`
-
-artifacts:
-  base-directory: build
->>>>>>> 4872bba33aaf97f93d8f945770a7cbcd10d88e4e
   files:
     - '**/*'
