@@ -16,12 +16,8 @@ phases:
   post_build:
     commands:
       - echo "Deploying to frontend EC2 via SSM"
-      # Use JSON for targets and parameters to avoid shell quoting issues
-      - aws ssm send-command \
-          --document-name "AWS-RunShellScript" \
-          --targets '[{"Key":"tag:Name","Values":["frontend-public-ec2"]}]' \
-          --comment "Deploy React frontend" \
-          --parameters '{"commands":["sudo rm -rf /var/www/html/*","sudo cp -r build/* /var/www/html/","sudo systemctl restart nginx"]}'
+      # Full command on one line — no backslashes
+      - aws ssm send-command --document-name "AWS-RunShellScript" --targets '[{"Key":"tag:Name","Values":["frontend-public-ec2"]}]' --comment "Deploy React frontend" --parameters '{"commands":["sudo rm -rf /var/www/html/*","sudo cp -r build/* /var/www/html/","sudo systemctl restart nginx"]}'
 
 artifacts:
   files:
