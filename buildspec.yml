@@ -1,6 +1,6 @@
 version: 0.2
 
-# Build frontend artifacts and upload to S3
+# Build frontend artifacts and upload to S3 arti
 phases:
   install:
     runtime-versions:
