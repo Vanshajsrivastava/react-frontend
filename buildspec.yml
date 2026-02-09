@@ -1,6 +1,6 @@
 version: 0.2
 
-# Build frontend artifacts and upload to S3 arti
+# Build frontend artifacts and upload to S3
 phases:
   install:
     runtime-versions:
@@ -16,7 +16,7 @@ phases:
       - npm run build --if-present
   post_build:
     commands:
-      - VERSION="${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}"
+      - VERSION=$(echo "$CODEBUILD_RESOLVED_SOURCE_VERSION" | cut -c1-7)
       - ARTIFACT_KEY="$APP_NAME/$ENV/$VERSION.tar.gz"
       - echo "Packaging frontend artifact"
       - |
