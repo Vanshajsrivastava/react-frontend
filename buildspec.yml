@@ -1,28 +1,37 @@
 version: 0.2
 
+# Build frontend artifacts and upload to S3
 phases:
   install:
     runtime-versions:
       nodejs: 18
     commands:
-      - echo "Installing dependencies"
-      - npm install
-
+      - echo "Installing frontend dependencies"
+  pre_build:
+    commands:
+      - cd "$SOURCE_DIR"
+      - npm ci
   build:
     commands:
-      - echo "Building React app"
-      - npm run build
-
+      - npm run build --if-present
   post_build:
     commands:
-      - echo "Deploying React app to EC2 via SSM"
+      - VERSION="${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}"
+      - ARTIFACT_KEY="$APP_NAME/$ENV/$VERSION.tar.gz"
+      - echo "Packaging frontend artifact"
       - |
-        aws ssm send-command \
-          --document-name "AWS-RunShellScript" \
-          --targets '[{"Key":"tag:Name","Values":["frontend-public-ec2"]}]' \
-          --comment "Deploy React frontend" \
-          --parameters '{"commands":["sudo rm -rf /var/www/html/*","sudo cp -r $CODEBUILD_SRC_DIR/build/* /var/www/html/","sudo systemctl restart nginx"]}'
-
+        if [ -d build ]; then
+          tar -czf frontend.tar.gz build
+        elif [ -d dist ]; then
+          tar -czf frontend.tar.gz dist
+        else
+          tar -czf frontend.tar.gz .
+        fi
+      - echo "Uploading frontend artifact to S3"
+      - aws s3 cp frontend.tar.gz "s3://$ARTIFACT_BUCKET/$ARTIFACT_KEY"
+      - aws s3 cp frontend.tar.gz "s3://$ARTIFACT_BUCKET/$APP_NAME/$ENV/latest.tar.gz"
+      - echo "$ARTIFACT_KEY" > artifact_key.txt
 artifacts:
   files:
-    - '**/*'
+    - frontend.tar.gz
+    - artifact_key.txt
