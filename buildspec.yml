@@ -28,10 +28,12 @@ phases:
           tar -czf frontend.tar.gz .
         fi
       - echo "Uploading frontend artifact to S3"
-      - aws s3 cp frontend.tar.gz "s3://$ARTIFACT_BUCKET/$ARTIFACT_KEY"
-      - aws s3 cp frontend.tar.gz "s3://$ARTIFACT_BUCKET/$APP_NAME/$ENV/latest.tar.gz"
-      - echo "$ARTIFACT_KEY" > artifact_key.txt
+      - echo "Build output prepared for CodeDeploy"
 artifacts:
   files:
-    - frontend.tar.gz
-    - artifact_key.txt
+    - build/**/*
+    - src/**/*
+    - public/**/*
+    - package.json
+    - appspec.yml
+    - scripts/**/*
