@@ -1,8 +1,21 @@
 version: 0.0
 os: linux
+file_exists_behavior: OVERWRITE
+
 files:
-  - source: /
-    destination: /var/www/frontend
+  - source: build/
+    destination: /var/www/frontend/build
+
+permissions:
+  - object: /var/www/frontend
+    pattern: "**"
+    owner: root
+    group: root
+    mode: 755
+    type:
+      - file
+      - directory
+
 hooks:
   AfterInstall:
     - location: scripts/frontend_after_install.sh
