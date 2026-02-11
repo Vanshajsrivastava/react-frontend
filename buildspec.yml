@@ -14,7 +14,7 @@ phases:
       - npm run build --if-present
   post_build:
     commands:
-      - echo "Preparing CodeDeploy revision for frontend"
+      - echo "Preparing CodeDeploy revision + CloudFront invalidation template"
 
 artifacts:
   files:
@@ -22,3 +22,4 @@ artifacts:
     - appspec.yml
     - scripts/**/*
     - package.json
+    - cloudformation/**/*

@@ -1,0 +1,105 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Custom-resource stack to invalidate a CloudFront distribution on each stack update"
+
+Parameters:
+  DistributionId:
+    Type: String
+    Description: "CloudFront distribution ID"
+  CallerReference:
+    Type: String
+    Description: "Unique value to force update (for example commit SHA)"
+
+Resources:
+  InvalidationLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: CloudFrontInvalidationPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - cloudfront:CreateInvalidation
+                Resource: "*"
+
+  InvalidationLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      Runtime: python3.12
+      Handler: index.handler
+      Role: !GetAtt InvalidationLambdaRole.Arn
+      Timeout: 60
+      Code:
+        ZipFile: |
+          import json
+          import urllib.request
+          import boto3
+
+          cloudfront = boto3.client("cloudfront")
+
+          def send(event, context, status, data=None, physical_id=None, reason=None):
+              payload = json.dumps({
+                  "Status": status,
+                  "Reason": reason or f"See CloudWatch Logs: {context.log_stream_name}",
+                  "PhysicalResourceId": physical_id or context.log_stream_name,
+                  "StackId": event["StackId"],
+                  "RequestId": event["RequestId"],
+                  "LogicalResourceId": event["LogicalResourceId"],
+                  "Data": data or {}
+              }).encode("utf-8")
+
+              req = urllib.request.Request(
+                  event["ResponseURL"],
+                  data=payload,
+                  method="PUT",
+                  headers={"content-type": "", "content-length": str(len(payload))}
+              )
+              urllib.request.urlopen(req)
+
+          def handler(event, context):
+              try:
+                  request_type = event["RequestType"]
+                  props = event["ResourceProperties"]
+                  distribution_id = props["DistributionId"]
+                  caller_ref = props["CallerReference"]
+
+                  if request_type in ("Create", "Update"):
+                      response = cloudfront.create_invalidation(
+                          DistributionId=distribution_id,
+                          InvalidationBatch={
+                              "Paths": {"Quantity": 1, "Items": ["/*"]},
+                              "CallerReference": f"{caller_ref}-{event['RequestId']}"
+                          }
+                      )
+                      invalidation_id = response["Invalidation"]["Id"]
+                      send(event, context, "SUCCESS", {"InvalidationId": invalidation_id}, invalidation_id)
+                  else:
+                      send(event, context, "SUCCESS", {"Message": "Delete noop"})
+              except Exception as exc:
+                  send(event, context, "FAILED", reason=str(exc))
+
+  CloudFrontInvalidation:
+    Type: Custom::CloudFrontInvalidation
+    Properties:
+      ServiceToken: !GetAtt InvalidationLambda.Arn
+      DistributionId: !Ref DistributionId
+      CallerReference: !Ref CallerReference
+
+Outputs:
+  LastInvalidationId:
+    Description: "Most recent invalidation ID created by this stack update"
+    Value: !GetAtt CloudFrontInvalidation.InvalidationId
