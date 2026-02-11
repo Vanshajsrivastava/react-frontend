@@ -3,9 +3,17 @@ set -euo pipefail
 
 # Discover backend private IP by EC2 tag and render nginx reverse-proxy config.
 # Ensure AWS CLI uses the instance region even when no profile is configured.
-REGION="$(curl -fsS http://169.254.169.254/latest/dynamic/instance-identity/document | sed -n 's/.*\"region\"[[:space:]]*:[[:space:]]*\"\\([^\"]*\\)\".*/\\1/p')"
+# IMDSv2 requires a token on many AWS accounts.
+REGION="${AWS_REGION:-}"
 if [ -z "${REGION}" ]; then
-  echo "Could not determine AWS region from instance metadata."
+  TOKEN="$(curl -fsS -X PUT 'http://169.254.169.254/latest/api/token' \
+    -H 'X-aws-ec2-metadata-token-ttl-seconds: 21600' || true)"
+  REGION="$(curl -fsS -H "X-aws-ec2-metadata-token: ${TOKEN}" \
+    http://169.254.169.254/latest/dynamic/instance-identity/document 2>/dev/null | \
+    sed -n 's/.*\"region\"[[:space:]]*:[[:space:]]*\"\\([^\"]*\\)\".*/\\1/p')"
+fi
+if [ -z "${REGION}" ]; then
+  echo "Could not determine AWS region (IMDS/AWS_REGION)."
   exit 1
 fi
 
