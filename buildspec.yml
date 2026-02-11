@@ -1,6 +1,5 @@
 version: 0.2
 
-# Build frontend artifacts and upload to S3
 phases:
   install:
     runtime-versions:
@@ -9,31 +8,17 @@ phases:
       - echo "Installing frontend dependencies"
   pre_build:
     commands:
-      - cd "$SOURCE_DIR"
       - npm ci
   build:
     commands:
       - npm run build --if-present
   post_build:
     commands:
-      - VERSION=$(echo "$CODEBUILD_RESOLVED_SOURCE_VERSION" | cut -c1-7)
-      - ARTIFACT_KEY="$APP_NAME/$ENV/$VERSION.tar.gz"
-      - echo "Packaging frontend artifact"
-      - |
-        if [ -d build ]; then
-          tar -czf frontend.tar.gz build
-        elif [ -d dist ]; then
-          tar -czf frontend.tar.gz dist
-        else
-          tar -czf frontend.tar.gz .
-        fi
-      - echo "Uploading frontend artifact to S3"
-      - echo "Build output prepared for CodeDeploy"
+      - echo "Preparing CodeDeploy revision for frontend"
+
 artifacts:
   files:
     - build/**/*
-    - src/**/*
-    - public/**/*
-    - package.json
     - appspec.yml
     - scripts/**/*
+    - package.json
