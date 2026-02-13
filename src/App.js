@@ -4,9 +4,9 @@ import "./App.css";
 const profile = {
   name: "Vanshaj Srivastava",
   role: "DevOps, Automation & Cloud Operations Engineer",
-  location: "Leicester, UK",
+  location: "United Kingdom",
   intro:
-    "I design and operate reliable cloud platforms with Infrastructure as Code, CI/CD automation, and observability-first engineering.",
+    "I build secure, scalable, and automation-driven cloud platforms with a strong focus on reliability, deployment safety, and operational excellence.",
   github: "https://github.com/Vanshajsrivastava",
   linkedin: "https://www.linkedin.com/in/vanshaj-srivastava",
   email: "mailto:srivastavanshaj10@gmail.com",
@@ -48,6 +48,27 @@ const experiences = [
       "Authored process documentation and training materials to improve knowledge transfer and onboarding efficiency.",
       "Worked within Agile delivery models to collaborate continuously with business stakeholders and iterate quickly on SaaS configurations.",
     ],
+  },
+];
+
+const education = [
+  {
+    degree: "MSc in Cloud Computing",
+    school: "University of Leicester",
+    location: "Leicester, United Kingdom",
+    period: "Jan 2024 - Jul 2025",
+  },
+  {
+    degree: "BE in Computer Science & Engineering",
+    school: "Savitribai Phule Pune University",
+    location: "Pune, India",
+    period: "Aug 2019 - Jun 2023",
+  },
+  {
+    degree: "Higher Secondary",
+    school: "St John's School",
+    location: "Varanasi, India",
+    period: "2018 - 2019",
   },
 ];
 
@@ -172,8 +193,10 @@ function App() {
         <nav aria-label="Primary">
           <a href="#about">About</a>
           <a href="#experience">Experience</a>
+          <a href="#education">Education</a>
           <a href="#skills">Skills</a>
           <a href="#projects">Projects</a>
+          <a href="#blogs">Blogs</a>
           <a href="#contact">Contact</a>
         </nav>
 
@@ -188,33 +211,50 @@ function App() {
       </header>
 
       <main>
-        <section id="home" className="hero island reveal">
-          <p className="eyebrow">DevOps Portfolio</p>
-          <h1>{profile.name}</h1>
-          <p className="role">{profile.role}</p>
-          <p className="intro">{profile.intro}</p>
-          <p className="location">{profile.location}</p>
+        <section id="home" className="hero reveal">
+          <div className="hero-grid">
+            <div className="hero-content">
+              <p className="eyebrow">DevOps Portfolio</p>
+              <h1>{profile.name}</h1>
+              <p className="role">{profile.role}</p>
+              <p className="intro">{profile.intro}</p>
+              <p className="location">{profile.location}</p>
 
-          <div className="hero-cta">
-            <a className="btn btn-primary" href="#projects">
-              View Projects
-            </a>
-            <a className="btn btn-secondary" href="/resume.pdf" target="_blank" rel="noreferrer">
-              Download CV
-            </a>
+              <div className="hero-cta">
+                <a className="btn btn-primary" href="#projects">
+                  View Projects
+                </a>
+                <a className="btn btn-secondary" href="/resume.pdf" target="_blank" rel="noreferrer">
+                  Download CV
+                </a>
+              </div>
+            </div>
+
+            <div className="hero-photo-wrap" aria-label="Profile photo">
+              <img
+                className="hero-photo"
+                src="/profile-photo.jpg"
+                alt="Vanshaj Srivastava"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = "/profile-placeholder.svg";
+                }}
+              />
+            </div>
           </div>
         </section>
 
         <section id="about" className="section island reveal">
           <h2>About</h2>
           <p>
-            I am building my career across DevOps Engineering, Automation Engineering, Cloud Operations,
-            Site Reliability Engineering, and Linux Administration. My focus is on designing production-ready
-            platforms that are secure by default, scalable under load, and measurable through strong observability.
+            I am focused on building a long-term career in DevOps Engineering, Automation Engineering,
+            Cloud Operations Engineering, Site Reliability Engineering, and Linux Administration. My goal is to
+            contribute to high-performing engineering teams by improving platform reliability, release quality,
+            and operational efficiency through automation and robust cloud practices.
           </p>
           <p>
-            Based in the UK and open to opportunities worldwide, I hold a Graduate Route visa valid until
-            25 September 2027.
+            Based in the United Kingdom and open to opportunities worldwide, I hold a Graduate Route visa
+            valid until 25 September 2027.
           </p>
 
           <div className="focus-grid">
@@ -243,6 +283,22 @@ function App() {
                     <li key={point}>{point}</li>
                   ))}
                 </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+
+        <section id="education" className="section island reveal">
+          <h2>Education</h2>
+          <div className="education-list">
+            {education.map((item) => (
+              <article className="education-card" key={`${item.degree}-${item.school}`}>
+                <h3>{item.degree}</h3>
+                <p className="edu-school">{item.school}</p>
+                <p className="edu-meta">
+                  {item.location} · {item.period}
+                </p>
               </article>
             ))}
           </div>
@@ -282,6 +338,18 @@ function App() {
                 </a>
               </article>
             ))}
+          </div>
+        </section>
+
+
+        <section id="blogs" className="section island reveal">
+          <h2>Blogs</h2>
+          <div className="blog-placeholder">
+            <h3>Technical blogs are coming soon</h3>
+            <p>
+              I will start publishing articles on DevOps practices, cloud operations, CI/CD patterns,
+              Kubernetes, and automation playbooks.
+            </p>
           </div>
         </section>
 
