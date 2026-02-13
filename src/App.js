@@ -233,7 +233,7 @@ function App() {
             <div className="hero-photo-wrap" aria-label="Profile photo">
               <img
                 className="hero-photo"
-                src="/profile-photo.jpg"
+                src="/profile-photo.jpg?v=2"
                 alt="Vanshaj Srivastava"
                 onError={(e) => {
                   e.currentTarget.onerror = null;
