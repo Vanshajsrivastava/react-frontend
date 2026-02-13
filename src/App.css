@@ -1,13 +1,13 @@
 :root {
-  --bg: #eaf2ff;
-  --surface: #f8fbff;
-  --surface-soft: #edf4ff;
+  --bg: #f6efe3;
+  --surface: #fffaf0;
+  --surface-soft: #f8f0e2;
   --text: #0f172a;
   --muted: #334155;
-  --border: #c4d4ee;
-  --accent: #0ea5e9;
+  --border: #e4d6c3;
+  --accent: #0f766e;
   --accent-2: #2563eb;
-  --accent-3: #22c55e;
+  --accent-3: #f59e0b;
   --ring: rgba(37, 99, 235, 0.22);
   --shadow: 0 10px 28px rgba(20, 39, 77, 0.12);
 }
@@ -37,24 +37,28 @@ html {
 body {
   margin: 0;
   color: var(--text);
-  background:
-    radial-gradient(980px 420px at 10% -8%, color-mix(in srgb, var(--accent-2) 18%, transparent), transparent 62%),
-    radial-gradient(860px 390px at 94% -10%, color-mix(in srgb, var(--accent-3) 18%, transparent), transparent 61%),
-    linear-gradient(180deg, color-mix(in srgb, #ffffff 72%, var(--bg)) 0%, var(--bg) 100%);
+  background: var(--bg);
 }
 
 :root:not([data-theme="dark"]) body {
   background-image:
-    radial-gradient(980px 420px at 10% -8%, color-mix(in srgb, var(--accent-2) 20%, transparent), transparent 62%),
-    radial-gradient(860px 390px at 94% -10%, color-mix(in srgb, var(--accent-3) 20%, transparent), transparent 61%),
+    radial-gradient(980px 420px at 10% -8%, rgba(37, 99, 235, 0.14), transparent 62%),
+    radial-gradient(860px 390px at 94% -10%, rgba(245, 158, 11, 0.16), transparent 61%),
     repeating-linear-gradient(
       90deg,
-      color-mix(in srgb, var(--accent-2) 4%, transparent) 0,
-      color-mix(in srgb, var(--accent-2) 4%, transparent) 1px,
+      rgba(37, 99, 235, 0.05) 0,
+      rgba(37, 99, 235, 0.05) 1px,
       transparent 1px,
       transparent 48px
     ),
-    linear-gradient(180deg, color-mix(in srgb, #ffffff 74%, var(--bg)) 0%, var(--bg) 100%);
+    linear-gradient(180deg, #fff8ec 0%, #f4ead8 100%);
+}
+
+:root[data-theme="dark"] body {
+  background-image:
+    radial-gradient(880px 340px at 8% -12%, rgba(56, 189, 248, 0.22), transparent 62%),
+    radial-gradient(760px 360px at 92% -10%, rgba(167, 139, 250, 0.2), transparent 62%),
+    linear-gradient(180deg, #06101d 0%, #0a162a 55%, #0d1a31 100%);
 }
 
 .app-shell {
@@ -162,9 +166,18 @@ main {
 :root:not([data-theme="dark"]) .hero {
   padding: 2.1rem 1.4rem 1.8rem;
   background:
-    radial-gradient(460px 140px at 90% 0%, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent 70%),
-    linear-gradient(135deg, color-mix(in srgb, var(--surface) 84%, #ffffff) 0%, color-mix(in srgb, var(--surface-soft) 94%, #ffffff) 100%);
-  border: 1px solid color-mix(in srgb, var(--border) 86%, transparent);
+    radial-gradient(460px 140px at 90% 0%, rgba(37, 99, 235, 0.12), transparent 70%),
+    linear-gradient(135deg, #fffaf2 0%, #f7efde 100%);
+  border: 1px solid #e8dac7;
+  border-radius: 22px;
+}
+
+:root[data-theme="dark"] .hero {
+  padding: 2.1rem 1.4rem 1.8rem;
+  background:
+    radial-gradient(460px 150px at 90% 0%, rgba(56, 189, 248, 0.15), transparent 70%),
+    linear-gradient(140deg, #0f1c34 0%, #132746 100%);
+  border: 1px solid #29406a;
   border-radius: 22px;
 }
 
@@ -230,6 +243,26 @@ main {
 
 :root:not([data-theme="dark"]) .hero .location {
   color: #11233f;
+}
+
+:root[data-theme="dark"] .hero .eyebrow {
+  color: #67d0ff;
+}
+
+:root[data-theme="dark"] .hero h1 {
+  color: #f1f6ff;
+}
+
+:root[data-theme="dark"] .hero .role {
+  color: #a9d7ff;
+}
+
+:root[data-theme="dark"] .hero .intro {
+  color: #c3d5f4;
+}
+
+:root[data-theme="dark"] .hero .location {
+  color: #e3ecff;
 }
 
 .location {
