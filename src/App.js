@@ -69,11 +69,11 @@ const projects = [
     repo: "https://github.com/Vanshajsrivastava/Infra-automation-portfolio/tree/main/bash-automation",
   },
   {
-    title: "CloudBoard Ops Dashboard",
-    problem: "Centralize environment health and deployment visibility.",
-    stack: ["AWS", "Monitoring", "Automation", "DevOps workflows"],
-    impact: "Made operational signals easier to review during deployments.",
-    repo: "https://github.com/Vanshajsrivastava/Infra-automation-portfolio",
+    title: "NLP Interface for Rule-Based Reasoning (Dissertation)",
+    problem: "Convert unstructured text into explainable, rule-backed inferences for real-world domains.",
+    stack: ["Python", "spaCy", "medSpaCy", "NetworkX", "Groove", "GPT-3.5"],
+    impact: "Built an end-to-end XAI pipeline from language input to graph reasoning and human-readable explanations.",
+    repo: "https://github.com/Vanshajsrivastava/vs272",
   },
 ];
 
