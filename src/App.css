@@ -80,6 +80,26 @@ body {
   flex-wrap: wrap;
 }
 
+.topbar nav a {
+  position: relative;
+}
+
+.topbar nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: width 180ms ease;
+}
+
+.topbar nav a:hover::after {
+  width: 100%;
+}
+
 .topbar nav a,
 .contact-links a,
 .project-card a {
@@ -195,9 +215,62 @@ main {
   margin-top: 2.85rem;
 }
 
+.island {
+  position: relative;
+  background: color-mix(in srgb, var(--surface) 95%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+  border-radius: 22px;
+  padding: 1.2rem;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.island::before,
+.island::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.island::before {
+  width: 160px;
+  height: 160px;
+  top: -72px;
+  right: -52px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent-2) 28%, transparent), transparent 68%);
+}
+
+.island::after {
+  width: 140px;
+  height: 140px;
+  bottom: -68px;
+  left: -48px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent-3) 24%, transparent), transparent 70%);
+}
+
+.island > * {
+  position: relative;
+  z-index: 1;
+}
+
 .section h2 {
   margin-bottom: 0.92rem;
   font-size: 1.65rem;
+  display: inline-block;
+  position: relative;
+}
+
+.section h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.38rem;
+  width: 70%;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), transparent);
 }
 
 .section p {
@@ -232,6 +305,13 @@ main {
   border-radius: 16px;
   padding: 1rem;
   box-shadow: var(--shadow);
+  border-left: 4px solid color-mix(in srgb, var(--accent-2) 72%, var(--accent));
+  transition: transform 170ms ease, box-shadow 170ms ease;
+}
+
+.experience-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px color-mix(in srgb, var(--accent-2) 18%, rgba(2, 8, 23, 0.22));
 }
 
 .exp-head {
@@ -286,7 +366,8 @@ main {
 
 .skill-card:hover,
 .project-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 16px 36px color-mix(in srgb, var(--accent-2) 18%, rgba(2, 8, 23, 0.2));
 }
 
 .skill-card h3,

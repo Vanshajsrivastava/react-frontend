@@ -27,10 +27,26 @@ const experiences = [
     location: "Remote, UK",
     period: "Sep 2025 - Present",
     highlights: [
-      "Built CI/CD pipelines with Jenkins and GitHub Actions to reduce deployment lead time.",
-      "Provisioned AWS infrastructure (EC2, VPC, IAM, Auto Scaling) using Terraform and CloudFormation.",
-      "Delivered containerized workloads on EKS and integrated monitoring with CloudWatch, Grafana, and Loki.",
-      "Implemented automated test workflows (PyTest, Robot Framework) and improved release reliability.",
+      "Executed end-to-end DevOps tasks independently across sandbox and pre-production environments.",
+      "Built, maintained, and optimized 10+ CI/CD pipelines using Jenkins and GitHub Actions, reducing deployment time by 35%.",
+      "Designed and configured AWS services (EC2, VPC, IAM, Auto Scaling), improving environment stability and security compliance.",
+      "Provisioned and operated 15+ containerized microservices on Amazon EKS with Horizontal Pod Autoscaling (HPA).",
+      "Established monitoring and alerting with CloudWatch, Grafana, and Loki, reducing incident response time by 30%.",
+      "Automated infrastructure provisioning using Terraform and CloudFormation, improving deployment consistency by 45%.",
+      "Orchestrated GitOps workflows using ArgoCD, enabling automated and auditable Kubernetes deployments.",
+      "Integrated automated test suites (PyTest and Robot Framework) into CI/CD pipelines to validate builds before deployment.",
+    ],
+  },
+  {
+    title: "IT Functional Consultant",
+    company: "Andapp Digital",
+    location: "Pune, India",
+    period: "May 2023 - Oct 2023",
+    highlights: [
+      "Led full-lifecycle implementation of Oracle Fusion HCM across Core HR, Payroll, and Talent modules for enterprise users in India and the UAE.",
+      "Streamlined configuration and deployment by customizing processes with HDL files and Sandbox environments, reducing rollout errors and delivery time.",
+      "Authored process documentation and training materials to improve knowledge transfer and onboarding efficiency.",
+      "Worked within Agile delivery models to collaborate continuously with business stakeholders and iterate quickly on SaaS configurations.",
     ],
   },
 ];
@@ -172,7 +188,7 @@ function App() {
       </header>
 
       <main>
-        <section id="home" className="hero reveal">
+        <section id="home" className="hero island reveal">
           <p className="eyebrow">DevOps Portfolio</p>
           <h1>{profile.name}</h1>
           <p className="role">{profile.role}</p>
@@ -189,16 +205,16 @@ function App() {
           </div>
         </section>
 
-        <section id="about" className="section reveal">
+        <section id="about" className="section island reveal">
           <h2>About</h2>
           <p>
-            I am actively building my career in DevOps, Automation, Cloud Operations, Site Reliability,
-            and Linux Infrastructure Engineering. I specialize in creating secure, scalable, and highly
-            observable delivery platforms that improve release confidence and operational stability.
+            I am building my career across DevOps Engineering, Automation Engineering, Cloud Operations,
+            Site Reliability Engineering, and Linux Administration. My focus is on designing production-ready
+            platforms that are secure by default, scalable under load, and measurable through strong observability.
           </p>
           <p>
-            I am currently based in the UK, open to opportunities worldwide, and hold a Graduate Route
-            visa valid until 25 September 2027.
+            Based in the UK and open to opportunities worldwide, I hold a Graduate Route visa valid until
+            25 September 2027.
           </p>
 
           <div className="focus-grid">
@@ -210,7 +226,7 @@ function App() {
           </div>
         </section>
 
-        <section id="experience" className="section reveal">
+        <section id="experience" className="section island reveal">
           <h2>Experience</h2>
           <div className="experience-list">
             {experiences.map((exp) => (
@@ -232,7 +248,7 @@ function App() {
           </div>
         </section>
 
-        <section id="skills" className="section reveal">
+        <section id="skills" className="section island reveal">
           <h2>Skills</h2>
           <div className="skills-grid">
             {skillGroups.map((group) => (
@@ -248,7 +264,7 @@ function App() {
           </div>
         </section>
 
-        <section id="projects" className="section reveal">
+        <section id="projects" className="section island reveal">
           <h2>Projects</h2>
           <div className="project-grid">
             {projects.map((project) => (
@@ -269,7 +285,7 @@ function App() {
           </div>
         </section>
 
-        <section id="contact" className="section reveal">
+        <section id="contact" className="section island reveal">
           <h2>Contact</h2>
           <p>Open to DevOps, SRE, Cloud Ops, and platform engineering opportunities.</p>
           <div className="contact-links">
