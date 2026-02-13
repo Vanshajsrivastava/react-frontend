@@ -556,12 +556,28 @@ footer {
 @media (max-width: 768px) {
   .topbar {
     padding: 0.8rem 0.9rem;
+    flex-wrap: wrap;
   }
 
   .topbar nav {
     width: 100%;
-    justify-content: space-between;
     order: 3;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 0.85rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .topbar nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .topbar nav a {
+    flex: 0 0 auto;
+    font-size: 1.05rem;
   }
 
   .hero-grid {
@@ -569,7 +585,9 @@ footer {
   }
 
   .hero-photo {
-    width: min(240px, 72%);
+    width: min(420px, 100%);
+    aspect-ratio: 4 / 5;
+    object-position: center 22%;
   }
 
   .skills-grid,
@@ -590,6 +608,23 @@ footer {
 
   .section h2 {
     font-size: 1.45rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.9rem, 11vw, 2.45rem);
+  }
+
+  .role {
+    font-size: 0.95rem;
+  }
+
+  .hero-cta {
+    gap: 0.7rem;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
   }
 }
 
