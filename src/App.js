@@ -31,11 +31,15 @@ const skillGroups = [
   },
   {
     title: "Monitoring",
-    items: ["Prometheus", "Grafana", "Loki", "Promtail", "Node Exporter"],
+    items: ["CloudWatch", "Prometheus", "Grafana", "Loki", "Promtail", "Node Exporter"],
   },
   {
-    title: "Scripting",
-    items: ["Bash", "Python", "Linux automation"],
+    title: "NLP & Reasoning",
+    items: ["spaCy", "medSpaCy", "NER", "Dependency Parsing", "NetworkX", "Groove (Graph Rewriting)", "Explainable AI (XAI)", "OpenAI GPT-3.5 API"],
+  },
+  {
+    title: "Scripting & Languages",
+    items: ["Bash", "Python", "JavaScript", "Ruby", "Linux automation"],
   },
 ];
 
@@ -73,7 +77,7 @@ const projects = [
     problem: "Convert unstructured text into explainable, rule-backed inferences for real-world domains.",
     stack: ["Python", "spaCy", "medSpaCy", "NetworkX", "Groove", "GPT-3.5"],
     impact: "Built an end-to-end XAI pipeline from language input to graph reasoning and human-readable explanations.",
-    repo: "https://github.com/Vanshajsrivastava/vs272",
+    repo: "https://github.com/Vanshajsrivastava/nlp-rule-based-reasoning-engine",
   },
 ];
 
@@ -129,7 +133,7 @@ function App() {
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           aria-label="Toggle color theme"
         >
-          {theme === "dark" ? "Light" : "Dark"}
+          {theme === "dark" ? "☀" : "☾"}
         </button>
       </header>
 
@@ -153,8 +157,10 @@ function App() {
         <section id="about" className="section reveal">
           <h2>About</h2>
           <p>
-            I focus on practical cloud automation: infrastructure as code, secure delivery pipelines,
-            and observable systems that are easy to operate.
+            I am currently focused on building my career in DevOps Engineering, Automation Engineering,
+            Cloud Operations Engineering, Site Reliability Engineering, and Linux Administration. I am based
+            in the UK, open to opportunities worldwide, and currently hold a Graduate Route visa valid until
+            25 September 2027.
           </p>
         </section>
 
