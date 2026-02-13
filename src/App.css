@@ -1,13 +1,13 @@
 :root {
-  --bg: #eef4ff;
-  --surface: #fbfdff;
-  --surface-soft: #edf3ff;
-  --text: #0b1220;
-  --muted: #51627d;
-  --border: #cfdcff;
-  --accent: #0f766e;
+  --bg: #eaf2ff;
+  --surface: #f8fbff;
+  --surface-soft: #edf4ff;
+  --text: #0f172a;
+  --muted: #334155;
+  --border: #c4d4ee;
+  --accent: #0ea5e9;
   --accent-2: #2563eb;
-  --accent-3: #0ea5e9;
+  --accent-3: #22c55e;
   --ring: rgba(37, 99, 235, 0.22);
   --shadow: 0 10px 28px rgba(20, 39, 77, 0.12);
 }
@@ -38,23 +38,23 @@ body {
   margin: 0;
   color: var(--text);
   background:
-    radial-gradient(980px 420px at 10% -8%, color-mix(in srgb, var(--accent-2) 26%, transparent), transparent 62%),
-    radial-gradient(860px 390px at 94% -10%, color-mix(in srgb, var(--accent-3) 26%, transparent), transparent 61%),
-    linear-gradient(180deg, color-mix(in srgb, #ffffff 82%, var(--bg)) 0%, var(--bg) 100%);
+    radial-gradient(980px 420px at 10% -8%, color-mix(in srgb, var(--accent-2) 18%, transparent), transparent 62%),
+    radial-gradient(860px 390px at 94% -10%, color-mix(in srgb, var(--accent-3) 18%, transparent), transparent 61%),
+    linear-gradient(180deg, color-mix(in srgb, #ffffff 72%, var(--bg)) 0%, var(--bg) 100%);
 }
 
 :root:not([data-theme="dark"]) body {
   background-image:
-    radial-gradient(980px 420px at 10% -8%, color-mix(in srgb, var(--accent-2) 26%, transparent), transparent 62%),
-    radial-gradient(860px 390px at 94% -10%, color-mix(in srgb, var(--accent-3) 26%, transparent), transparent 61%),
+    radial-gradient(980px 420px at 10% -8%, color-mix(in srgb, var(--accent-2) 20%, transparent), transparent 62%),
+    radial-gradient(860px 390px at 94% -10%, color-mix(in srgb, var(--accent-3) 20%, transparent), transparent 61%),
     repeating-linear-gradient(
       90deg,
-      color-mix(in srgb, var(--accent-2) 5%, transparent) 0,
-      color-mix(in srgb, var(--accent-2) 5%, transparent) 1px,
+      color-mix(in srgb, var(--accent-2) 4%, transparent) 0,
+      color-mix(in srgb, var(--accent-2) 4%, transparent) 1px,
       transparent 1px,
       transparent 48px
     ),
-    linear-gradient(180deg, color-mix(in srgb, #ffffff 82%, var(--bg)) 0%, var(--bg) 100%);
+    linear-gradient(180deg, color-mix(in srgb, #ffffff 74%, var(--bg)) 0%, var(--bg) 100%);
 }
 
 .app-shell {
@@ -155,7 +155,17 @@ main {
 }
 
 .hero {
+  position: relative;
   padding: 2.6rem 0 1.6rem;
+}
+
+:root:not([data-theme="dark"]) .hero {
+  padding: 2.1rem 1.4rem 1.8rem;
+  background:
+    radial-gradient(460px 140px at 90% 0%, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent 70%),
+    linear-gradient(135deg, color-mix(in srgb, var(--surface) 84%, #ffffff) 0%, color-mix(in srgb, var(--surface-soft) 94%, #ffffff) 100%);
+  border: 1px solid color-mix(in srgb, var(--border) 86%, transparent);
+  border-radius: 22px;
 }
 
 .hero-grid {
@@ -208,6 +218,18 @@ main {
 .intro {
   color: var(--muted);
   max-width: 69ch;
+}
+
+:root:not([data-theme="dark"]) .hero .role {
+  color: #17469f;
+}
+
+:root:not([data-theme="dark"]) .hero .intro {
+  color: #2f4668;
+}
+
+:root:not([data-theme="dark"]) .hero .location {
+  color: #11233f;
 }
 
 .location {
