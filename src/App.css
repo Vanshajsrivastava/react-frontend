@@ -74,9 +74,10 @@ body {
   justify-content: space-between;
   gap: 1rem;
   padding: 0.9rem 1.2rem;
-  border-bottom: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
   backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--text) 8%, transparent);
 }
 
 .brand {
@@ -164,21 +165,17 @@ main {
 }
 
 :root:not([data-theme="dark"]) .hero {
-  padding: 2.1rem 1.4rem 1.8rem;
-  background:
-    radial-gradient(460px 140px at 90% 0%, rgba(37, 99, 235, 0.12), transparent 70%),
-    linear-gradient(135deg, #fffaf2 0%, #f7efde 100%);
-  border: 1px solid #e8dac7;
-  border-radius: 22px;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 2.6rem 0 1.6rem;
 }
 
 :root[data-theme="dark"] .hero {
-  padding: 2.1rem 1.4rem 1.8rem;
-  background:
-    radial-gradient(460px 150px at 90% 0%, rgba(56, 189, 248, 0.15), transparent 70%),
-    linear-gradient(140deg, #0f1c34 0%, #132746 100%);
-  border: 1px solid #29406a;
-  border-radius: 22px;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 2.6rem 0 1.6rem;
 }
 
 .hero-grid {
