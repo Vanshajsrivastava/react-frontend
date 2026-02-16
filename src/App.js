@@ -352,14 +352,16 @@ function App() {
                 <p>
                   <strong>Impact:</strong> {project.impact}
                 </p>
-                <a href={project.repo} target="_blank" rel="noreferrer">
-                  View Repository
-                </a>
-                {project.demo && (
-                  <a href={project.demo} target="_blank" rel="noreferrer">
-                    Live Demo
+                <div className="project-links">
+                  <a href={project.repo} target="_blank" rel="noreferrer">
+                    View Repository
                   </a>
-                )}
+                  {project.demo && (
+                    <a href={project.demo} target="_blank" rel="noreferrer">
+                      Live Demo
+                    </a>
+                  )}
+                </div>
               </article>
             ))}
           </div>

@@ -529,6 +529,13 @@ main {
   font-weight: 700;
 }
 
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.2rem;
+}
+
 .contact-links {
   display: flex;
   gap: 0.95rem;
