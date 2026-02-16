@@ -110,6 +110,17 @@ const skillGroups = [
     title: "Languages & Scripting",
     items: ["Bash", "Python", "JavaScript", "Ruby"],
   },
+  {
+    title: "Web Apps & Security",
+    items: [
+      "Django",
+      "Role-Based Access Control (RBAC)",
+      "Authentication & Authorization",
+      "CRUD Workflows",
+      "Markdown Content Management",
+      "Vercel Deployment",
+    ],
+  },
 ];
 
 const projects = [
@@ -147,6 +158,14 @@ const projects = [
     stack: ["Python", "spaCy", "medSpaCy", "NetworkX", "Groove", "GPT-3.5"],
     impact: "Built an end-to-end XAI pipeline from natural language input to graph reasoning and human-readable explanations.",
     repo: "https://github.com/Vanshajsrivastava/nlp-rule-based-reasoning-engine",
+  },
+  {
+    title: "WikiRead Knowledge Base Platform",
+    problem: "Provide a lightweight wiki-style platform where users can browse, create, and manage knowledge pages.",
+    stack: ["Django", "Python", "HTML/CSS", "JavaScript", "RBAC", "Authentication"],
+    impact: "Delivered a role-aware content platform with secure login flows and structured knowledge management.",
+    repo: "https://github.com/Vanshajsrivastava/Wikiread",
+    demo: "https://wikiread-lib.vercel.app/",
   },
 ];
 
@@ -336,6 +355,11 @@ function App() {
                 <a href={project.repo} target="_blank" rel="noreferrer">
                   View Repository
                 </a>
+                {project.demo && (
+                  <a href={project.demo} target="_blank" rel="noreferrer">
+                    Live Demo
+                  </a>
+                )}
               </article>
             ))}
           </div>
