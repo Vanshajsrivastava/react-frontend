@@ -283,6 +283,7 @@ const infraHighlights = [
 
 function App() {
   const [theme, setTheme] = useState("light");
+  const [infraOpen, setInfraOpen] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem("theme");
@@ -327,7 +328,15 @@ function App() {
           <a href="#education">Education</a>
           <a href="#skills">Skills</a>
           <a href="#projects">Projects</a>
-          <a href="#wikiread-infra">Wikiread Infra</a>
+          <a
+            href="#wikiread-infra"
+            onClick={(e) => {
+              e.preventDefault();
+              setInfraOpen(true);
+            }}
+          >
+            Wikiread Infra
+          </a>
           <a href="#blogs">Blogs</a>
           <a href="#contact">Contact</a>
         </nav>
@@ -469,77 +478,26 @@ function App() {
                   <a href={project.repo} target="_blank" rel="noreferrer">
                     View Repository
                   </a>
-                  {project.demo && (
+                  {project.title === "WikiRead Knowledge Base Platform" ? (
+                    <button
+                      type="button"
+                      className="infra-open-btn"
+                      onClick={() => setInfraOpen(true)}
+                    >
+                      View Infrastructure
+                    </button>
+                  ) : (
+                    project.demo && (
                     <a href={project.demo} target="_blank" rel="noreferrer">
                       Live Demo
                     </a>
+                    )
                   )}
                 </div>
               </article>
             ))}
           </div>
         </section>
-
-        <section id="wikiread-infra" className="section island reveal">
-          <h2>Wikiread Infrastructure</h2>
-          <p className="infra-intro">
-            Multi-layer production architecture for WikiRead using AWS + Kubernetes + Terraform with GitOps
-            deployment, approval-governed infrastructure changes, and autoscaling runtime operations.
-          </p>
-
-          <div className="infra-flow-strip">
-            {infraFlow.map((step, idx) => (
-              <div className="infra-flow-node" key={step}>
-                <span>{step}</span>
-                {idx < infraFlow.length - 1 && <FiArrowRight className="infra-flow-arrow" aria-hidden="true" />}
-              </div>
-            ))}
-          </div>
-
-          <div className="infra-summary-grid">
-            {infraHighlights.map((block) => (
-              <article className="infra-summary-card" key={block.title}>
-                <h3>{block.title}</h3>
-                <ul>
-                  {block.points.map((point) => (
-                    <li key={point}>{point}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-
-          <div className="infra-architecture-grid">
-            {architectureBlocks.map((block) => (
-              <article className="infra-architecture-block" key={block.title}>
-                <h3>{block.title}</h3>
-                <div className="service-list">
-                  {block.items.map((item) => (
-                    <div className="service-item" key={item.name}>
-                      <span className="service-icon-wrap">
-                        <item.Icon className="service-icon" style={{ color: item.color }} aria-hidden="true" />
-                      </span>
-                      <div>
-                        <p className="service-name">{item.name}</p>
-                        <p className="service-note">{item.note}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <div className="project-links infra-links">
-            <a href="https://github.com/Vanshajsrivastava/Wikiread" target="_blank" rel="noreferrer">
-              View Wikiread Repository
-            </a>
-            <a href="https://wikiread-lib.vercel.app/" target="_blank" rel="noreferrer">
-              Live Demo
-            </a>
-          </div>
-        </section>
-
 
         <section id="blogs" className="section island reveal">
           <h2>Blogs</h2>
@@ -566,6 +524,77 @@ function App() {
           </div>
         </section>
       </main>
+
+      {infraOpen && (
+        <div className="infra-modal-overlay" onClick={() => setInfraOpen(false)}>
+          <section
+            id="wikiread-infra"
+            className="infra-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="infra-modal-head">
+              <h2>Wikiread Infrastructure</h2>
+              <button
+                type="button"
+                className="infra-close-btn"
+                onClick={() => setInfraOpen(false)}
+                aria-label="Close infrastructure view"
+              >
+                ✕
+              </button>
+            </div>
+
+            <p className="infra-intro">
+              Production-grade multi-layer architecture for WikiRead on AWS.
+              <br />
+              Built with Terraform, EKS, GitOps, approval-governed CI/CD, and observability-first operations.
+            </p>
+
+            <div className="infra-flow-strip">
+              {infraFlow.map((step, idx) => (
+                <div className="infra-flow-node" key={step}>
+                  <span>{step}</span>
+                  {idx < infraFlow.length - 1 && <FiArrowRight className="infra-flow-arrow" aria-hidden="true" />}
+                </div>
+              ))}
+            </div>
+
+            <div className="infra-summary-grid">
+              {infraHighlights.map((block) => (
+                <article className="infra-summary-card" key={block.title}>
+                  <h3>{block.title}</h3>
+                  <ul>
+                    {block.points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+
+            <div className="infra-architecture-grid">
+              {architectureBlocks.map((block) => (
+                <article className="infra-architecture-block" key={block.title}>
+                  <h3>{block.title}</h3>
+                  <div className="service-list">
+                    {block.items.map((item) => (
+                      <div className="service-item" key={item.name}>
+                        <span className="service-icon-wrap">
+                          <item.Icon className="service-icon" style={{ color: item.color }} aria-hidden="true" />
+                        </span>
+                        <div>
+                          <p className="service-name">{item.name}</p>
+                          <p className="service-note">{item.note}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        </div>
+      )}
 
       <footer>
         <p>
