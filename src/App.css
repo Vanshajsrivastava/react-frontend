@@ -492,6 +492,10 @@ main {
   gap: 1rem;
 }
 
+.skills-grid {
+  align-items: start;
+}
+
 .skill-card,
 .project-card {
   border: 1px solid var(--border);
@@ -500,6 +504,10 @@ main {
   padding: 1rem;
   box-shadow: var(--shadow);
   transition: transform 170ms ease, box-shadow 170ms ease;
+}
+
+.skill-card {
+  height: fit-content;
 }
 
 .skill-card:hover,
