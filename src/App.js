@@ -1,688 +1,359 @@
 import { useEffect, useMemo, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import "./App.css";
 import {
   SiAmazoncloudwatch,
-  SiAmazondynamodb,
   SiAmazoneks,
-  SiAmazoniam,
   SiAmazonrds,
   SiAmazonroute53,
-  SiAmazons3,
+  SiAmazonwebservices,
   SiArgo,
   SiDocker,
   SiGithub,
-  SiHelm,
-  SiKubernetes,
-  SiPostgresql,
-  SiTerraform,
-  SiPython,
-  SiJavascript,
-  SiRuby,
-  SiDjango,
-  SiJenkins,
   SiGithubactions,
   SiGrafana,
+  SiHelm,
+  SiJenkins,
+  SiKubernetes,
   SiPrometheus,
-  SiOpenai,
-  SiSpacy,
+  SiPython,
+  SiTerraform,
 } from "react-icons/si";
+import { FaAws, FaCodeBranch, FaLinux } from "react-icons/fa";
 import { LuWorkflow } from "react-icons/lu";
-import { FiArrowRight, FiCloud } from "react-icons/fi";
-import { FaAws, FaLinux, FaCodeBranch, FaShieldAlt, FaNetworkWired, FaKey, FaBell, FaCogs } from "react-icons/fa";
-import { TbTopologyStarRing3 } from "react-icons/tb";
-import { MdSecurity } from "react-icons/md";
-import { IoChevronDown } from "react-icons/io5";
 
 const profile = {
   name: "Vanshaj Srivastava",
-  role: "DevOps, Automation, Cloud Platform & Operations Engineer",
+  title: "DevOps, Cloud Platform & Operations Engineer",
+  subtitle:
+    "I design secure cloud infrastructure, build CI/CD systems, and deliver reliable Kubernetes workloads with GitOps and automation.",
   location: "United Kingdom",
-  intro:
-    "I build secure, scalable, and automation-driven cloud platforms with a strong focus on reliability, deployment safety, and operational excellence.",
   github: "https://github.com/Vanshajsrivastava",
   linkedin: "https://www.linkedin.com/in/vanshaj-srivastava",
   email: "mailto:srivastavanshaj10@gmail.com",
 };
 
-const focusAreas = [
-  "DevOps Engineering",
-  "Automation Engineering",
-  "Cloud Platform Engineering",
-  "Cloud Operations Engineering",
-  "Site Reliability Engineering",
-  "Linux Administration",
+const stackBadges = [
+  { label: "AWS", Icon: FaAws },
+  { label: "Terraform", Icon: SiTerraform },
+  { label: "Kubernetes", Icon: SiKubernetes },
+  { label: "Docker", Icon: SiDocker },
 ];
 
 const experiences = [
   {
-    title: "DevOps Engineer Intern",
+    role: "DevOps Engineer Intern",
     company: "AppInventiv",
-    location: "Remote, UK",
     period: "Sep 2025 - Present",
+    location: "Remote, UK",
     highlights: [
-      "Executed end-to-end DevOps tasks independently across sandbox and pre-production environments.",
-      "Built, maintained, and optimized 10+ CI/CD pipelines using Jenkins and GitHub Actions, reducing deployment time by 35%.",
-      "Designed and configured AWS services (EC2, VPC, IAM, Auto Scaling), improving environment stability and security compliance.",
-      "Provisioned and operated 15+ containerized microservices on Amazon EKS with Horizontal Pod Autoscaling (HPA).",
-      "Established monitoring and alerting with CloudWatch, Grafana, and Loki, reducing incident response time by 30%.",
-      "Automated infrastructure provisioning using Terraform and CloudFormation, improving deployment consistency by 45%.",
-      "Orchestrated GitOps workflows using ArgoCD, enabling automated and auditable Kubernetes deployments.",
-      "Integrated automated test suites (PyTest and Robot Framework) into CI/CD pipelines to validate builds before deployment.",
+      "Built and optimized 10+ CI/CD pipelines with Jenkins and GitHub Actions.",
+      "Provisioned and operated containerized services on Amazon EKS with autoscaling.",
+      "Automated infra with Terraform/CloudFormation and improved deployment consistency.",
+      "Implemented observability with CloudWatch, Grafana, and Loki.",
     ],
   },
   {
-    title: "IT Functional Consultant",
+    role: "IT Functional Consultant",
     company: "Andapp Digital",
-    location: "Pune, India",
     period: "May 2023 - Oct 2023",
-    highlights: [
-      "Led full-lifecycle implementation of Oracle Fusion HCM across Core HR, Payroll, and Talent modules for enterprise users in India and the UAE.",
-      "Streamlined configuration and deployment by customizing processes with HDL files and Sandbox environments, reducing rollout errors and delivery time.",
-      "Authored process documentation and training materials to improve knowledge transfer and onboarding efficiency.",
-      "Worked within Agile delivery models to collaborate continuously with business stakeholders and iterate quickly on SaaS configurations.",
-    ],
-  },
-];
-
-const education = [
-  {
-    degree: "MSc in Cloud Computing",
-    school: "University of Leicester",
-    location: "Leicester, United Kingdom",
-    period: "Jan 2024 - Jul 2025",
-  },
-  {
-    degree: "BE in Computer Science & Engineering",
-    school: "Savitribai Phule Pune University",
     location: "Pune, India",
-    period: "Aug 2019 - Jun 2023",
-  },
-  {
-    degree: "Higher Secondary",
-    school: "St John's School",
-    location: "Varanasi, India",
-    period: "2018 - 2019",
+    highlights: [
+      "Delivered Oracle HCM implementations across HR, Payroll, and Talent modules.",
+      "Reduced rollout errors using repeatable configuration patterns and sandbox workflows.",
+      "Created process documentation and stakeholder training assets.",
+    ],
   },
 ];
 
-const skillGroups = [
-  {
-    title: "Cloud",
-    items: ["AWS (EC2, VPC, IAM, S3, CloudWatch, SNS)", "Azure"],
-  },
-  {
-    title: "IaC",
-    items: ["Terraform", "CloudFormation"],
-  },
-  {
-    title: "CI/CD",
-    items: ["GitHub Actions", "Jenkins", "AWS CodePipeline", "CodeDeploy"],
-  },
-  {
-    title: "Containers & Kubernetes",
-    items: ["Docker", "Amazon EKS", "ArgoCD", "Helm"],
-  },
-  {
-    title: "Monitoring",
-    items: ["CloudWatch", "Prometheus", "Grafana", "Loki", "Promtail", "Node Exporter"],
-  },
-  {
-    title: "NLP & Reasoning",
-    items: [
-      "spaCy",
-      "medSpaCy",
-      "NER",
-      "Dependency Parsing",
-      "NetworkX",
-      "Groove (Graph Rewriting)",
-      "Explainable AI (XAI)",
-      "OpenAI GPT-3.5 API",
-    ],
-  },
-  {
-    title: "Languages & Scripting",
-    items: ["Bash", "Python", "JavaScript", "Ruby"],
-  },
-  {
-    title: "Web Apps & Security",
-    items: [
-      "Django",
-      "Role-Based Access Control (RBAC)",
-      "Authentication & Authorization",
-      "CRUD Workflows",
-      "Markdown Content Management",
-      "Vercel Deployment",
-    ],
-  },
-];
+const skills = {
+  Cloud: [
+    { name: "AWS (EC2, VPC, IAM, S3, CloudWatch, SNS)", Icon: FaAws },
+    { name: "Amazon EKS", Icon: SiAmazoneks },
+    { name: "Amazon RDS", Icon: SiAmazonrds },
+    { name: "Route 53", Icon: SiAmazonroute53 },
+  ],
+  DevOps: [
+    { name: "Terraform", Icon: SiTerraform },
+    { name: "GitHub Actions", Icon: SiGithubactions },
+    { name: "Jenkins", Icon: SiJenkins },
+    { name: "Argo CD / Rollouts", Icon: SiArgo },
+    { name: "CodePipeline / CodeBuild", Icon: LuWorkflow },
+  ],
+  Programming: [
+    { name: "Python", Icon: SiPython },
+    { name: "Bash", Icon: FaLinux },
+    { name: "JavaScript", Icon: SiGithub },
+  ],
+  Tools: [
+    { name: "Docker", Icon: SiDocker },
+    { name: "Kubernetes", Icon: SiKubernetes },
+    { name: "Helm", Icon: SiHelm },
+    { name: "CloudWatch", Icon: SiAmazoncloudwatch },
+    { name: "Prometheus", Icon: SiPrometheus },
+    { name: "Grafana", Icon: SiGrafana },
+  ],
+};
 
 const projects = [
   {
-    title: "Terraform AWS VPC + EC2",
-    problem: "Provision repeatable networking and compute environments quickly.",
-    stack: ["Terraform", "AWS VPC", "EC2", "IAM", "SSM"],
-    impact: "Reduced manual provisioning effort and standardized environment setup.",
-    repo: "https://github.com/Vanshajsrivastava/Infra-automation-portfolio/tree/main/terraform-vpc-ec2",
-  },
-  {
-    title: "S3 Static Website + CloudFront + OAC",
-    problem: "Serve static applications securely with low latency globally.",
-    stack: ["S3", "CloudFront", "OAC"],
-    impact: "Improved frontend delivery performance and tightened origin security.",
-    repo: "https://github.com/Vanshajsrivastava/Infra-automation-portfolio/tree/main/s3-static-website",
-  },
-  {
-    title: "CloudWatch Monitoring + SNS Alerting",
-    problem: "Detect service failures and notify teams before user impact grows.",
-    stack: ["CloudWatch", "SNS", "Metrics", "Alarms"],
-    impact: "Enabled proactive alerting and faster issue response.",
-    repo: "https://github.com/Vanshajsrivastava/Infra-automation-portfolio/tree/main/cloudwatch-monitoring",
-  },
-  {
-    title: "Bash Automation Toolkit",
-    problem: "Eliminate repetitive operations tasks across Linux environments.",
-    stack: ["Bash", "Cron", "System utilities"],
-    impact: "Improved operational consistency for routine maintenance and cleanup tasks.",
-    repo: "https://github.com/Vanshajsrivastava/Infra-automation-portfolio/tree/main/bash-automation",
-  },
-  {
-    title: "NLP Interface for Rule-Based Reasoning (Dissertation)",
-    problem: "Convert unstructured text into explainable, rule-backed inferences in family and medical domains.",
-    stack: ["Python", "spaCy", "medSpaCy", "NetworkX", "Groove", "GPT-3.5"],
-    impact: "Built an end-to-end XAI pipeline from natural language input to graph reasoning and human-readable explanations.",
-    repo: "https://github.com/Vanshajsrivastava/nlp-rule-based-reasoning-engine",
-  },
-  {
-    title: "WikiRead Knowledge Base Platform",
-    problem: "Provide a lightweight wiki-style platform where users can browse, create, and manage knowledge pages.",
-    stack: ["Django", "Python", "HTML/CSS", "JavaScript", "RBAC", "Authentication"],
-    impact: "Delivered a role-aware content platform with secure login flows and structured knowledge management.",
+    title: "Wikiread Platform (EKS + GitOps)",
+    desc: "Multi-layer Django platform with Terraform-provisioned AWS infrastructure, Argo CD deployment flow, and blue/green rollouts.",
+    stack: ["Terraform", "EKS", "Argo CD", "RDS", "CodePipeline"],
     repo: "https://github.com/Vanshajsrivastava/Wikiread",
     demo: "https://wikiread-lib.vercel.app/",
   },
-];
-
-const architectureBlocks = [
   {
-    title: "Global Ingress Flow",
-    items: [
-      { name: "Route 53", Icon: SiAmazonroute53, note: "DNS routing", color: "#8b5cf6" },
-      { name: "AWS WAF", Icon: FaShieldAlt, note: "L7 filtering", color: "#ef4444" },
-      { name: "NLB (wikiread-active)", Icon: FaNetworkWired, note: "Public entrypoint", color: "#ea580c" },
-    ],
+    title: "Terraform AWS VPC + EC2",
+    desc: "Reusable IaC setup for network and compute provisioning with secure-by-default baselines.",
+    stack: ["Terraform", "VPC", "EC2", "IAM", "SSM"],
+    repo: "https://github.com/Vanshajsrivastava/Infra-automation-portfolio/tree/main/terraform-vpc-ec2",
   },
   {
-    title: "Primary Region VPC (Multi-AZ)",
-    items: [
-      { name: "Amazon EKS", Icon: SiAmazoneks, note: "Managed control plane", color: "#f59e0b" },
-      { name: "Kubernetes Pods", Icon: SiKubernetes, note: "Django app runtime", color: "#326ce5" },
-      { name: "RDS PostgreSQL", Icon: SiAmazonrds, note: "Private database tier", color: "#ca8a04" },
-      { name: "PostgreSQL Engine", Icon: SiPostgresql, note: "Relational data store", color: "#336791" },
-      { name: "IAM Roles", Icon: SiAmazoniam, note: "Access control", color: "#f97316" },
-      { name: "Secrets Manager", Icon: FaKey, note: "App secrets delivery", color: "#10b981" },
-    ],
+    title: "CloudWatch Monitoring + SNS",
+    desc: "Proactive monitoring and alerting pipeline to reduce detection and response time.",
+    stack: ["CloudWatch", "SNS", "Metrics", "Alarms"],
+    repo: "https://github.com/Vanshajsrivastava/Infra-automation-portfolio/tree/main/cloudwatch-monitoring",
   },
   {
-    title: "Integrated DevOps Pipeline",
-    items: [
-      { name: "GitHub", Icon: SiGithub, note: "Source of truth", color: "#111827" },
-      { name: "CodePipeline", Icon: FaCodeBranch, note: "Release orchestration", color: "#16a34a" },
-      { name: "CodeBuild", Icon: FaCogs, note: "Build/deploy jobs", color: "#0ea5e9" },
-      { name: "Amazon ECR", Icon: SiDocker, note: "Container image registry", color: "#0ea5e9" },
-      { name: "Terraform", Icon: SiTerraform, note: "Infrastructure as code", color: "#7c3aed" },
-      { name: "Argo CD + Rollouts", Icon: SiArgo, note: "GitOps and blue/green", color: "#f97316" },
-      { name: "Helm", Icon: SiHelm, note: "Cluster package manager", color: "#0f766e" },
-      { name: "S3 + DynamoDB", Icon: SiAmazondynamodb, note: "Terraform state + lock", color: "#ca8a04" },
-      { name: "S3 Plan Artifacts", Icon: SiAmazons3, note: "Plan review storage", color: "#ea580c" },
-    ],
+    title: "S3 Static Website + CloudFront",
+    desc: "Secure static hosting with CDN acceleration and hardened origin access.",
+    stack: ["S3", "CloudFront", "OAC"],
+    repo: "https://github.com/Vanshajsrivastava/Infra-automation-portfolio/tree/main/s3-static-website",
   },
   {
-    title: "Observability & Scaling",
-    items: [
-      { name: "CloudWatch", Icon: SiAmazoncloudwatch, note: "Logs and metrics", color: "#f59e0b" },
-      { name: "metrics-server", Icon: SiKubernetes, note: "K8s resource metrics", color: "#2563eb" },
-      { name: "HPA", Icon: SiKubernetes, note: "Horizontal autoscaling", color: "#22c55e" },
-      { name: "SNS Approval Alerts", Icon: FaBell, note: "Plan notifications", color: "#eab308" },
-    ],
+    title: "Bash Automation Toolkit",
+    desc: "Operational scripts for recurring Linux maintenance and deployment tasks.",
+    stack: ["Bash", "Cron", "Linux"],
+    repo: "https://github.com/Vanshajsrivastava/Infra-automation-portfolio/tree/main/bash-automation",
+  },
+  {
+    title: "NLP Reasoning Engine",
+    desc: "Explainable NLP-to-rules pipeline for domain reasoning in medical/family use cases.",
+    stack: ["Python", "spaCy", "NetworkX", "OpenAI"],
+    repo: "https://github.com/Vanshajsrivastava/nlp-rule-based-reasoning-engine",
   },
 ];
 
-function getSkillIcon(item) {
-  const key = item.toLowerCase();
+const architectureFlow = [
+  { name: "GitHub", Icon: SiGithub },
+  { name: "CI/CD", Icon: FaCodeBranch },
+  { name: "Docker", Icon: SiDocker },
+  { name: "AWS", Icon: FaAws },
+  { name: "Load Balancer", Icon: SiAmazonwebservices },
+  { name: "EKS / EC2 Runtime", Icon: SiAmazoneks },
+  { name: "RDS", Icon: SiAmazonrds },
+];
 
-  if (key.includes("aws")) return FaAws;
-  if (key.includes("azure")) return FiCloud;
-  if (key.includes("terraform")) return SiTerraform;
-  if (key.includes("cloudformation")) return LuWorkflow;
-  if (key.includes("github actions")) return SiGithubactions;
-  if (key.includes("jenkins")) return SiJenkins;
-  if (key.includes("codepipeline")) return FaCodeBranch;
-  if (key.includes("codedeploy")) return FaCogs;
-  if (key.includes("docker")) return SiDocker;
-  if (key.includes("eks") || key.includes("kubernetes")) return SiKubernetes;
-  if (key.includes("argocd")) return SiArgo;
-  if (key.includes("helm")) return SiHelm;
-  if (key.includes("cloudwatch")) return SiAmazoncloudwatch;
-  if (key.includes("prometheus")) return SiPrometheus;
-  if (key.includes("grafana")) return SiGrafana;
-  if (key.includes("python")) return SiPython;
-  if (key.includes("javascript")) return SiJavascript;
-  if (key.includes("ruby")) return SiRuby;
-  if (key.includes("bash")) return FaLinux;
-  if (key.includes("django")) return SiDjango;
-  if (key.includes("rbac") || key.includes("authentication") || key.includes("authorization")) return MdSecurity;
-  if (key.includes("spa")) return SiSpacy;
-  if (key.includes("networkx") || key.includes("groove") || key.includes("dependency parsing")) return TbTopologyStarRing3;
-  if (key.includes("openai") || key.includes("gpt")) return SiOpenai;
-  return FaCodeBranch;
+const sectionIds = ["home", "about", "experience", "skills", "projects", "architecture", "contact"];
+
+function Section({ id, title, children }) {
+  return (
+    <section id={id} className="section">
+      <div className="container">
+        {title && <h2 className="section-title">{title}</h2>}
+        {children}
+      </div>
+    </section>
+  );
 }
-
-function getSkillColor(item) {
-  const key = item.toLowerCase();
-
-  if (key.includes("aws")) return "#ff9900";
-  if (key.includes("azure")) return "#0078d4";
-  if (key.includes("terraform")) return "#7b42bc";
-  if (key.includes("cloudformation")) return "#f59e0b";
-  if (key.includes("github")) return "#111827";
-  if (key.includes("jenkins")) return "#d24939";
-  if (key.includes("codepipeline")) return "#16a34a";
-  if (key.includes("codedeploy")) return "#0284c7";
-  if (key.includes("docker")) return "#2496ed";
-  if (key.includes("eks") || key.includes("kubernetes")) return "#326ce5";
-  if (key.includes("argocd")) return "#1f6feb";
-  if (key.includes("helm")) return "#0f766e";
-  if (key.includes("cloudwatch")) return "#f59e0b";
-  if (key.includes("prometheus")) return "#e6522c";
-  if (key.includes("grafana")) return "#f46800";
-  if (key.includes("loki")) return "#f2cc0c";
-  if (key.includes("promtail")) return "#22c55e";
-  if (key.includes("python")) return "#3776ab";
-  if (key.includes("javascript")) return "#f7df1e";
-  if (key.includes("ruby")) return "#cc342d";
-  if (key.includes("bash")) return "#4eaa25";
-  if (key.includes("django")) return "#092e20";
-  if (key.includes("rbac") || key.includes("authentication") || key.includes("authorization")) return "#ef4444";
-  if (key.includes("openai") || key.includes("gpt")) return "#10a37f";
-  return "#64748b";
-}
-
-const infraFlow = [
-  "GitHub",
-  "CodePipeline",
-  "CodeBuild",
-  "Amazon ECR",
-  "Argo CD",
-  "Amazon EKS",
-];
-
-const infraHighlights = [
-  {
-    title: "Runtime Architecture",
-    points: [
-      "Public ingress via internet-facing NLB service (`wikiread-active`).",
-      "Django workloads run on EKS node groups in private app subnets.",
-      "RDS PostgreSQL remains private in dedicated DB subnets.",
-      "Secrets are sourced from AWS Secrets Manager and injected into Kubernetes.",
-    ],
-  },
-  {
-    title: "Infrastructure Delivery",
-    points: [
-      "Source -> Terraform Plan -> SNS notification -> Manual Approval -> Apply.",
-      "Plan outputs stored in S3 for review and change auditability.",
-      "Terraform state stored in S3 with DynamoDB state locking.",
-      "Pipeline variables are injected via TF_VAR-based controls.",
-    ],
-  },
-  {
-    title: "GitOps Application Delivery",
-    points: [
-      "CodeBuild builds/pushes container image into Amazon ECR.",
-      "Deploy stage updates Argo CD Application image reference.",
-      "Argo CD syncs desired state from Git to EKS automatically.",
-      "Argo Rollouts provides blue/green promotion via active/preview services.",
-    ],
-  },
-  {
-    title: "Reliability & Operations",
-    points: [
-      "Horizontal scaling enabled through HPA with metrics-server.",
-      "CloudWatch observability addon provides runtime telemetry.",
-      "Manual infra approval reduces unsafe production drift.",
-      "Modular Terraform improves repeatability and maintainability.",
-    ],
-  },
-];
 
 function App() {
-  const [theme, setTheme] = useState("light");
-  const [infraOpen, setInfraOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const [scrolled, setScrolled] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    const stored = localStorage.getItem("theme");
-    const initial = stored || "light";
-    setTheme(initial);
-    document.documentElement.setAttribute("data-theme", initial);
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("is-visible");
-        });
-      },
-      { threshold: 0.14 }
-    );
-
-    const elements = document.querySelectorAll(".reveal");
-    elements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+      const pos = window.scrollY + 120;
+      let current = "home";
+      sectionIds.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= pos) current = id;
+      });
+      setActiveSection(current);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const year = useMemo(() => new Date().getFullYear(), []);
+  const rise = reduceMotion
+    ? {}
+    : {
+        initial: { opacity: 0, y: 24 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, amount: 0.2 },
+        transition: { duration: 0.45 },
+      };
 
   return (
-    <div className="app-shell">
-      <header className="topbar">
-        <a className="brand" href="#home">
-          VS
-        </a>
-
-        <nav aria-label="Primary">
-          <a href="#about">About</a>
-          <a href="#experience">Experience</a>
-          <a href="#education">Education</a>
-          <a href="#skills">Skills</a>
-          <a href="#projects">Projects</a>
-          <a href="#blogs">Blogs</a>
-          <a href="#contact">Contact</a>
-        </nav>
-
-        <button
-          className="theme-toggle"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          aria-label="Toggle color theme"
-          title="Toggle theme"
-        >
-          <span aria-hidden="true">{theme === "dark" ? "☀️" : "🌙"}</span>
-        </button>
+    <div className="portfolio-root">
+      <header className={`nav ${scrolled ? "nav-scrolled" : ""}`}>
+        <div className="container nav-inner">
+          <a className="brand" href="#home">
+            VS
+          </a>
+          <nav>
+            {sectionIds.map((id) => (
+              <a key={id} href={`#${id}`} className={activeSection === id ? "active" : ""}>
+                {id === "home" ? "Top" : id.charAt(0).toUpperCase() + id.slice(1)}
+              </a>
+            ))}
+          </nav>
+        </div>
       </header>
 
-      <main>
-        <section id="home" className="hero reveal">
-          <div className="hero-grid">
-            <div className="hero-content">
-              <p className="eyebrow">DevOps Portfolio</p>
-              <h1>{profile.name}</h1>
-              <p className="role">{profile.role}</p>
-              <p className="intro">{profile.intro}</p>
-              <p className="location">{profile.location}</p>
+      <Section id="home">
+        <motion.div className="hero" {...rise}>
+          <p className="eyebrow">DevOps Portfolio 2025</p>
+          <h1>
+            Building <span className="gradient-text">reliable cloud platforms</span> with automation-first delivery
+          </h1>
+          <p className="hero-subtitle">{profile.title}</p>
+          <p className="hero-copy">{profile.subtitle}</p>
+          <p className="hero-location">{profile.location}</p>
 
-              <div className="hero-cta">
-                <a className="btn btn-primary" href="#projects">
-                  View Projects
-                </a>
-                <a className="btn btn-secondary" href="/resume.pdf" target="_blank" rel="noreferrer">
-                  Download CV
-                </a>
-              </div>
-            </div>
-
-            <div className="hero-photo-wrap" aria-label="Profile photo">
-              <img
-                className="hero-photo"
-                src="/profile-photo.jpg?v=2"
-                alt="Vanshaj Srivastava"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = "/profile-placeholder.svg";
-                }}
-              />
-            </div>
-          </div>
-        </section>
-
-        <section id="about" className="section island reveal">
-          <h2>About</h2>
-          <p>
-            I am focused on building a long-term career in DevOps Engineering, Automation Engineering,
-            Cloud Operations Engineering, Site Reliability Engineering, and Linux Administration. My goal is to
-            contribute to high-performing engineering teams by improving platform reliability, release quality,
-            and operational efficiency through automation and robust cloud practices.
-          </p>
-          <p>
-            Based in the United Kingdom and open to opportunities worldwide, I hold a Graduate Route visa
-            valid until 25 September 2027.
-          </p>
-
-          <div className="focus-grid">
-            {focusAreas.map((item) => (
-              <span className="focus-pill" key={item}>
-                {item}
-              </span>
-            ))}
-          </div>
-        </section>
-
-        <section id="experience" className="section island reveal">
-          <h2>Experience</h2>
-          <div className="experience-list">
-            {experiences.map((exp) => (
-              <article className="experience-card" key={`${exp.company}-${exp.title}`}>
-                <div className="exp-head">
-                  <h3>{exp.title}</h3>
-                  <span>{exp.period}</span>
-                </div>
-                <p className="exp-meta">
-                  {exp.company} · {exp.location}
-                </p>
-                <ul>
-                  {exp.highlights.map((point) => (
-                    <li key={point}>{point}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </section>
-
-
-        <section id="education" className="section island reveal">
-          <h2>Education</h2>
-          <div className="education-list">
-            {education.map((item) => (
-              <article className="education-card" key={`${item.degree}-${item.school}`}>
-                <h3>{item.degree}</h3>
-                <p className="edu-school">{item.school}</p>
-                <p className="edu-meta">
-                  {item.location} · {item.period}
-                </p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section id="skills" className="section island reveal">
-          <h2>Skills</h2>
-          <div className="skills-grid">
-            {skillGroups.map((group) => (
-              <details className="skill-card skill-dropdown" key={group.title}>
-                <summary className="skill-summary">
-                  <h3>{group.title}</h3>
-                  <IoChevronDown className="skill-chevron" aria-hidden="true" />
-                </summary>
-                <ul>
-                  {group.items.map((item) => (
-                    <li key={item} className="skill-item">
-                      {(() => {
-                        const Icon = getSkillIcon(item);
-                        return (
-                          <Icon
-                            className="skill-item-icon"
-                            style={{ color: getSkillColor(item) }}
-                            aria-hidden="true"
-                          />
-                        );
-                      })()}
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            ))}
-          </div>
-        </section>
-
-        <section id="projects" className="section island reveal">
-          <h2>Projects</h2>
-          <div className="project-grid">
-            {projects.map((project) => (
-              <article className="project-card" key={project.title}>
-                <h3>{project.title}</h3>
-                <p>{project.problem}</p>
-                <p>
-                  <strong>Stack:</strong> {project.stack.join(", ")}
-                </p>
-                <p>
-                  <strong>Impact:</strong> {project.impact}
-                </p>
-                <div className="project-links">
-                  <a href={project.repo} target="_blank" rel="noreferrer">
-                    View Repository
-                  </a>
-                  {project.title === "WikiRead Knowledge Base Platform" ? (
-                    <button
-                      type="button"
-                      className="infra-open-btn"
-                      onClick={() => setInfraOpen(true)}
-                    >
-                      View Infrastructure
-                    </button>
-                  ) : (
-                    project.demo && (
-                    <a href={project.demo} target="_blank" rel="noreferrer">
-                      Live Demo
-                    </a>
-                    )
-                  )}
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section id="blogs" className="section island reveal">
-          <h2>Blogs</h2>
-          <div className="blog-placeholder">
-            <h3>Technical blogs are coming soon</h3>
-            <p>
-              I will start publishing articles on DevOps practices, cloud operations, CI/CD patterns,
-              Kubernetes, and automation playbooks.
-            </p>
-          </div>
-        </section>
-
-        <section id="contact" className="section island reveal">
-          <h2>Contact</h2>
-          <p>Open to DevOps, SRE, Cloud Ops, and platform engineering opportunities.</p>
-          <div className="contact-links">
-            <a href={profile.linkedin} target="_blank" rel="noreferrer">
-              LinkedIn
-            </a>
-            <a href={profile.github} target="_blank" rel="noreferrer">
-              GitHub
-            </a>
-            <a href={profile.email}>Email</a>
-          </div>
-        </section>
-      </main>
-
-      {infraOpen && (
-        <div className="infra-modal-overlay" onClick={() => setInfraOpen(false)}>
-          <section
-            id="wikiread-infra"
-            className="infra-modal"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="infra-modal-head">
-              <h2>Wikiread Infrastructure</h2>
-              <button
-                type="button"
-                className="infra-close-btn"
-                onClick={() => setInfraOpen(false)}
-                aria-label="Close infrastructure view"
+          <div className="badge-row">
+            {stackBadges.map(({ label, Icon }, idx) => (
+              <motion.span
+                key={label}
+                className="tech-badge"
+                animate={reduceMotion ? undefined : { y: [0, -4, 0] }}
+                transition={reduceMotion ? undefined : { repeat: Infinity, duration: 2.4, delay: idx * 0.15 }}
               >
-                ✕
-              </button>
-            </div>
+                <Icon /> {label}
+              </motion.span>
+            ))}
+          </div>
 
-            <p className="infra-intro">
-              Production-grade multi-layer architecture for WikiRead on AWS.
-              <br />
-              Built with Terraform, EKS, GitOps, approval-governed CI/CD, and observability-first operations.
-            </p>
+          <div className="cta-row">
+            <a className="btn btn-primary" href="#projects">
+              View Projects
+            </a>
+            <a className="btn btn-secondary" href="/resume.pdf" target="_blank" rel="noreferrer">
+              Download Resume
+            </a>
+          </div>
+        </motion.div>
+      </Section>
 
-            <div className="infra-flow-strip">
-              {infraFlow.map((step, idx) => (
-                <div className="infra-flow-node" key={step}>
-                  <span>{step}</span>
-                  {idx < infraFlow.length - 1 && <FiArrowRight className="infra-flow-arrow" aria-hidden="true" />}
-                </div>
-              ))}
-            </div>
+      <Section id="about" title="About">
+        <motion.p className="copy" {...rise}>
+          {profile.name} is a DevOps and Cloud Engineer focused on secure infrastructure, deployment quality,
+          and operational reliability through IaC, Kubernetes, and observability-driven engineering.
+        </motion.p>
+      </Section>
 
-            <div className="infra-summary-grid">
-              {infraHighlights.map((block) => (
-                <article className="infra-summary-card" key={block.title}>
-                  <h3>{block.title}</h3>
-                  <ul>
-                    {block.points.map((point) => (
-                      <li key={point}>{point}</li>
-                    ))}
-                  </ul>
-                </article>
-              ))}
-            </div>
-
-            <div className="infra-architecture-grid">
-              {architectureBlocks.map((block) => (
-                <article className="infra-architecture-block" key={block.title}>
-                  <h3>{block.title}</h3>
-                  <div className="service-list">
-                    {block.items.map((item) => (
-                      <div className="service-item" key={item.name}>
-                        <span className="service-icon-wrap">
-                          <item.Icon className="service-icon" style={{ color: item.color }} aria-hidden="true" />
-                        </span>
-                        <div>
-                          <p className="service-name">{item.name}</p>
-                          <p className="service-note">{item.note}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
+      <Section id="experience" title="Experience">
+        <div className="timeline">
+          {experiences.map((exp) => (
+            <motion.article className="timeline-item card" key={`${exp.company}-${exp.role}`} {...rise}>
+              <div className="timeline-dot" />
+              <div className="timeline-content">
+                <h3>{exp.role}</h3>
+                <p className="meta">
+                  {exp.company} · {exp.location} · {exp.period}
+                </p>
+                <ul>
+                  {exp.highlights.map((h) => (
+                    <li key={h}>{h}</li>
+                  ))}
+                </ul>
+              </div>
+            </motion.article>
+          ))}
         </div>
-      )}
+      </Section>
 
-      <footer>
-        <p>
-          © {year} {profile.name}. All rights reserved.
-        </p>
+      <Section id="skills" title="Skills">
+        <div className="skills-grid">
+          {Object.entries(skills).map(([category, items]) => (
+            <motion.article className="card skill-card" key={category} {...rise}>
+              <h3>{category}</h3>
+              <div className="badge-grid">
+                {items.map(({ name, Icon }) => (
+                  <span className="skill-badge" key={name}>
+                    <Icon /> {name}
+                  </span>
+                ))}
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </Section>
+
+      <Section id="projects" title="Projects">
+        <div className="projects-grid">
+          {projects.map((project) => (
+            <motion.article
+              className="card project-card"
+              key={project.title}
+              {...rise}
+              whileHover={reduceMotion ? undefined : { y: -6 }}
+            >
+              <h3>{project.title}</h3>
+              <p>{project.desc}</p>
+              <div className="tag-row">
+                {project.stack.map((tag) => (
+                  <span className="tag" key={tag}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div className="link-row">
+                <a href={project.repo} target="_blank" rel="noreferrer">
+                  GitHub
+                </a>
+                {project.demo && (
+                  <a href={project.demo} target="_blank" rel="noreferrer">
+                    Live Demo
+                  </a>
+                )}
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </Section>
+
+      <Section id="architecture" title="Architecture">
+        <motion.p className="copy" {...rise}>
+          Reference deployment path for production delivery.
+        </motion.p>
+        <div className="arch-flow">
+          {architectureFlow.map((node, i) => (
+            <motion.div className="arch-node" key={node.name} {...rise}>
+              <node.Icon />
+              <span>{node.name}</span>
+              {i < architectureFlow.length - 1 && <em>→</em>}
+            </motion.div>
+          ))}
+        </div>
+      </Section>
+
+      <Section id="contact" title="Contact">
+        <motion.p className="copy" {...rise}>
+          Open to DevOps, SRE, Cloud Ops, and Platform Engineering opportunities.
+        </motion.p>
+        <div className="link-row">
+          <a href={profile.linkedin} target="_blank" rel="noreferrer">
+            LinkedIn
+          </a>
+          <a href={profile.github} target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+          <a href={profile.email}>Email</a>
+        </div>
+      </Section>
+
+      <footer className="footer">
+        <div className="container">© {year} {profile.name}. All rights reserved.</div>
       </footer>
     </div>
   );
 }
 
 export default App;
+
