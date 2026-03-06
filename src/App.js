@@ -1,5 +1,23 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
+import {
+  SiAmazoncloudwatch,
+  SiAmazondynamodb,
+  SiAmazoneks,
+  SiAmazoniam,
+  SiAmazonrds,
+  SiAmazonroute53,
+  SiAmazons3,
+  SiAmazonwebservices,
+  SiArgo,
+  SiDocker,
+  SiGithub,
+  SiHelm,
+  SiKubernetes,
+  SiPostgresql,
+  SiTerraform,
+} from "react-icons/si";
+import { LuWorkflow } from "react-icons/lu";
 
 const profile = {
   name: "Vanshaj Srivastava",
@@ -166,6 +184,51 @@ const projects = [
     impact: "Delivered a role-aware content platform with secure login flows and structured knowledge management.",
     repo: "https://github.com/Vanshajsrivastava/Wikiread",
     demo: "https://wikiread-lib.vercel.app/",
+  },
+];
+
+const architectureBlocks = [
+  {
+    title: "Global Ingress Flow",
+    items: [
+      { name: "Route 53", Icon: SiAmazonroute53, note: "DNS routing" },
+      { name: "AWS WAF", Icon: SiAmazonwebservices, note: "L7 filtering" },
+      { name: "NLB (wikiread-active)", Icon: SiAmazonwebservices, note: "Public entrypoint" },
+    ],
+  },
+  {
+    title: "Primary Region VPC (Multi-AZ)",
+    items: [
+      { name: "Amazon EKS", Icon: SiAmazoneks, note: "Managed control plane" },
+      { name: "Kubernetes Pods", Icon: SiKubernetes, note: "Django app runtime" },
+      { name: "RDS PostgreSQL", Icon: SiAmazonrds, note: "Private database tier" },
+      { name: "PostgreSQL Engine", Icon: SiPostgresql, note: "Relational data store" },
+      { name: "IAM Roles", Icon: SiAmazoniam, note: "Access control" },
+      { name: "Secrets Manager", Icon: SiAmazonwebservices, note: "App secrets delivery" },
+    ],
+  },
+  {
+    title: "Integrated DevOps Pipeline",
+    items: [
+      { name: "GitHub", Icon: SiGithub, note: "Source of truth" },
+      { name: "CodePipeline", Icon: LuWorkflow, note: "Release orchestration" },
+      { name: "CodeBuild", Icon: SiAmazonwebservices, note: "Build/deploy jobs" },
+      { name: "Amazon ECR", Icon: SiDocker, note: "Container image registry" },
+      { name: "Terraform", Icon: SiTerraform, note: "Infrastructure as code" },
+      { name: "Argo CD + Rollouts", Icon: SiArgo, note: "GitOps and blue/green" },
+      { name: "Helm", Icon: SiHelm, note: "Cluster package manager" },
+      { name: "S3 + DynamoDB", Icon: SiAmazondynamodb, note: "Terraform state + lock" },
+      { name: "S3 Plan Artifacts", Icon: SiAmazons3, note: "Plan review storage" },
+    ],
+  },
+  {
+    title: "Observability & Scaling",
+    items: [
+      { name: "CloudWatch", Icon: SiAmazoncloudwatch, note: "Logs and metrics" },
+      { name: "metrics-server", Icon: SiKubernetes, note: "K8s resource metrics" },
+      { name: "HPA", Icon: SiKubernetes, note: "Horizontal autoscaling" },
+      { name: "SNS Approval Alerts", Icon: SiAmazonwebservices, note: "Plan notifications" },
+    ],
   },
 ];
 
@@ -371,60 +434,26 @@ function App() {
         <section id="wikiread-infra" className="section island reveal">
           <h2>Wikiread Infrastructure</h2>
           <p>
-            Multi-layer production architecture on AWS using Terraform + EKS + Argo CD GitOps with governed
-            infra approvals and blue/green application delivery.
+            Production architecture implemented for WikiRead using AWS, Kubernetes, Terraform, and GitOps delivery.
           </p>
 
-          <div className="infra-chip-row">
-            <span className="infra-chip">AWS EKS</span>
-            <span className="infra-chip">RDS PostgreSQL (Private)</span>
-            <span className="infra-chip">CodePipeline + CodeBuild</span>
-            <span className="infra-chip">Argo CD + Argo Rollouts</span>
-            <span className="infra-chip">Terraform Modules</span>
-            <span className="infra-chip">SNS Approval Gate</span>
-            <span className="infra-chip">CloudWatch + HPA</span>
-          </div>
-
-          <div className="infra-grid">
-            <article className="infra-card">
-              <h3>Runtime Architecture</h3>
-              <ul>
-                <li>Public ingress via NLB service (`wikiread-active`).</li>
-                <li>Django pods run on EKS node groups in private app subnets.</li>
-                <li>RDS PostgreSQL remains private in dedicated DB subnets.</li>
-                <li>Secrets loaded from AWS Secrets Manager into Kubernetes Secret.</li>
-              </ul>
-            </article>
-
-            <article className="infra-card">
-              <h3>Infrastructure Delivery</h3>
-              <ul>
-                <li>Source -> Terraform Plan -> SNS notification -> Manual approval -> Apply.</li>
-                <li>Plan output stored in S3 for review and audit trail.</li>
-                <li>State managed with S3 backend and DynamoDB locking.</li>
-                <li>Environment variables passed into CodeBuild via TF_VAR controls.</li>
-              </ul>
-            </article>
-
-            <article className="infra-card">
-              <h3>Application Delivery (GitOps)</h3>
-              <ul>
-                <li>Image built in CodeBuild and pushed to Amazon ECR.</li>
-                <li>Deploy job updates Argo CD Application image tag.</li>
-                <li>Argo CD syncs desired state from Git to EKS automatically.</li>
-                <li>Argo Rollouts handles blue/green promotion with preview/active services.</li>
-              </ul>
-            </article>
-
-            <article className="infra-card">
-              <h3>Operational Outcomes</h3>
-              <ul>
-                <li>Repeatable provisioning using parameterized Terraform modules.</li>
-                <li>Safer changes through approval gate and pipeline auditability.</li>
-                <li>Horizontal scaling through HPA and metrics-server.</li>
-                <li>CloudWatch observability for production health signals.</li>
-              </ul>
-            </article>
+          <div className="infra-architecture-grid">
+            {architectureBlocks.map((block) => (
+              <article className="infra-architecture-block" key={block.title}>
+                <h3>{block.title}</h3>
+                <div className="service-list">
+                  {block.items.map((item) => (
+                    <div className="service-item" key={item.name}>
+                      <item.Icon className="service-icon" aria-hidden="true" />
+                      <div>
+                        <p className="service-name">{item.name}</p>
+                        <p className="service-note">{item.note}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            ))}
           </div>
 
           <div className="project-links infra-links">

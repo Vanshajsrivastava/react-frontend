@@ -586,6 +586,60 @@ main {
   margin-top: 0.95rem;
 }
 
+.infra-architecture-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1.75fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.infra-architecture-block {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.infra-architecture-block h3 {
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+}
+
+.service-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.service-item {
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-soft) 70%, transparent);
+  border-radius: 12px;
+  padding: 0.65rem 0.75rem;
+  display: grid;
+  grid-template-columns: 1.5rem 1fr;
+  align-items: start;
+  gap: 0.7rem;
+}
+
+.service-icon {
+  font-size: 1.05rem;
+  color: var(--accent-2);
+  margin-top: 0.1rem;
+}
+
+.service-name {
+  margin: 0;
+  font-weight: 700;
+  color: var(--text) !important;
+}
+
+.service-note {
+  margin: 0.12rem 0 0;
+  font-size: 0.88rem;
+  color: var(--muted) !important;
+}
+
 .contact-links {
   display: flex;
   gap: 0.95rem;
@@ -650,7 +704,8 @@ footer {
   .skills-grid,
   .project-grid,
   .education-list,
-  .infra-grid {
+  .infra-grid,
+  .infra-architecture-grid {
     grid-template-columns: 1fr;
   }
 }
