@@ -16,13 +16,27 @@ import {
   SiKubernetes,
   SiPostgresql,
   SiTerraform,
+  SiPython,
+  SiJavascript,
+  SiRuby,
+  SiDjango,
+  SiJenkins,
+  SiGithubactions,
+  SiGrafana,
+  SiPrometheus,
+  SiOpenai,
+  SiSpacy,
 } from "react-icons/si";
 import { LuWorkflow } from "react-icons/lu";
-import { FiArrowRight } from "react-icons/fi";
+import { FiArrowRight, FiCloud } from "react-icons/fi";
+import { FaAws, FaLinux, FaCodeBranch } from "react-icons/fa";
+import { TbTopologyStarRing3 } from "react-icons/tb";
+import { MdSecurity } from "react-icons/md";
+import { IoChevronDown } from "react-icons/io5";
 
 const profile = {
   name: "Vanshaj Srivastava",
-  role: "DevOps, Automation & Cloud Operations Engineer",
+  role: "DevOps, Automation, Cloud Platform & Operations Engineer",
   location: "United Kingdom",
   intro:
     "I build secure, scalable, and automation-driven cloud platforms with a strong focus on reliability, deployment safety, and operational excellence.",
@@ -34,6 +48,7 @@ const profile = {
 const focusAreas = [
   "DevOps Engineering",
   "Automation Engineering",
+  "Cloud Platform Engineering",
   "Cloud Operations Engineering",
   "Site Reliability Engineering",
   "Linux Administration",
@@ -232,6 +247,35 @@ const architectureBlocks = [
     ],
   },
 ];
+
+function getSkillIcon(item) {
+  const key = item.toLowerCase();
+
+  if (key.includes("aws")) return FaAws;
+  if (key.includes("azure")) return FiCloud;
+  if (key.includes("terraform")) return SiTerraform;
+  if (key.includes("cloudformation")) return LuWorkflow;
+  if (key.includes("github actions")) return SiGithubactions;
+  if (key.includes("jenkins")) return SiJenkins;
+  if (key.includes("codepipeline") || key.includes("codedeploy")) return LuWorkflow;
+  if (key.includes("docker")) return SiDocker;
+  if (key.includes("eks") || key.includes("kubernetes")) return SiKubernetes;
+  if (key.includes("argocd")) return SiArgo;
+  if (key.includes("helm")) return SiHelm;
+  if (key.includes("cloudwatch")) return SiAmazoncloudwatch;
+  if (key.includes("prometheus")) return SiPrometheus;
+  if (key.includes("grafana")) return SiGrafana;
+  if (key.includes("python")) return SiPython;
+  if (key.includes("javascript")) return SiJavascript;
+  if (key.includes("ruby")) return SiRuby;
+  if (key.includes("bash")) return FaLinux;
+  if (key.includes("django")) return SiDjango;
+  if (key.includes("rbac") || key.includes("authentication") || key.includes("authorization")) return MdSecurity;
+  if (key.includes("spa")) return SiSpacy;
+  if (key.includes("networkx") || key.includes("groove") || key.includes("dependency parsing")) return TbTopologyStarRing3;
+  if (key.includes("openai") || key.includes("gpt")) return SiOpenai;
+  return FaCodeBranch;
+}
 
 const infraFlow = [
   "GitHub",
@@ -449,14 +493,23 @@ function App() {
           <h2>Skills</h2>
           <div className="skills-grid">
             {skillGroups.map((group) => (
-              <article className="skill-card" key={group.title}>
-                <h3>{group.title}</h3>
+              <details className="skill-card skill-dropdown" key={group.title} open>
+                <summary className="skill-summary">
+                  <h3>{group.title}</h3>
+                  <IoChevronDown className="skill-chevron" aria-hidden="true" />
+                </summary>
                 <ul>
                   {group.items.map((item) => (
-                    <li key={item}>{item}</li>
+                    <li key={item} className="skill-item">
+                      {(() => {
+                        const Icon = getSkillIcon(item);
+                        return <Icon className="skill-item-icon" aria-hidden="true" />;
+                      })()}
+                      <span>{item}</span>
+                    </li>
                   ))}
                 </ul>
-              </article>
+              </details>
             ))}
           </div>
         </section>

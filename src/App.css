@@ -519,6 +519,54 @@ main {
   color: var(--muted);
 }
 
+.skill-dropdown {
+  padding: 0.85rem 0.95rem;
+}
+
+.skill-summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.skill-summary::-webkit-details-marker {
+  display: none;
+}
+
+.skill-summary h3 {
+  margin: 0;
+}
+
+.skill-chevron {
+  transition: transform 180ms ease;
+  color: var(--accent-2);
+}
+
+.skill-dropdown[open] .skill-chevron {
+  transform: rotate(180deg);
+}
+
+.skill-dropdown ul {
+  margin-top: 0.7rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+.skill-item {
+  display: grid;
+  grid-template-columns: 1.25rem 1fr;
+  align-items: center;
+  gap: 0.58rem;
+  padding: 0.26rem 0;
+}
+
+.skill-item-icon {
+  color: var(--accent-2);
+  font-size: 0.98rem;
+}
+
 .project-card p {
   color: var(--muted);
 }
