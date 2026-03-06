@@ -586,9 +586,70 @@ main {
   margin-top: 0.95rem;
 }
 
+.infra-intro {
+  max-width: 90ch;
+}
+
+.infra-flow-strip {
+  margin-top: 0.95rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.infra-flow-node {
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-soft) 88%, transparent);
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.infra-flow-arrow {
+  color: var(--accent-2);
+}
+
+.infra-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.infra-summary-card {
+  border: 1px solid var(--border);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--surface) 92%, transparent),
+    color-mix(in srgb, var(--surface-soft) 76%, transparent)
+  );
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.infra-summary-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.6rem;
+}
+
+.infra-summary-card ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+}
+
+.infra-summary-card li + li {
+  margin-top: 0.34rem;
+}
+
 .infra-architecture-grid {
   display: grid;
-  grid-template-columns: 1.25fr 1.75fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
   margin-top: 1rem;
 }
@@ -615,17 +676,25 @@ main {
   border: 1px solid var(--border);
   background: color-mix(in srgb, var(--surface-soft) 70%, transparent);
   border-radius: 12px;
-  padding: 0.65rem 0.75rem;
+  padding: 0.62rem 0.72rem;
   display: grid;
-  grid-template-columns: 1.5rem 1fr;
+  grid-template-columns: 2.05rem 1fr;
   align-items: start;
   gap: 0.7rem;
 }
 
+.service-icon-wrap {
+  width: 1.95rem;
+  height: 1.95rem;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  background: color-mix(in srgb, var(--surface) 76%, transparent);
+  display: grid;
+  place-items: center;
+}
+
 .service-icon {
-  font-size: 1.05rem;
-  color: var(--accent-2);
-  margin-top: 0.1rem;
+  font-size: 1.08rem;
 }
 
 .service-name {
@@ -704,7 +773,7 @@ footer {
   .skills-grid,
   .project-grid,
   .education-list,
-  .infra-grid,
+  .infra-summary-grid,
   .infra-architecture-grid {
     grid-template-columns: 1fr;
   }

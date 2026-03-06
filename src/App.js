@@ -18,6 +18,7 @@ import {
   SiTerraform,
 } from "react-icons/si";
 import { LuWorkflow } from "react-icons/lu";
+import { FiArrowRight } from "react-icons/fi";
 
 const profile = {
   name: "Vanshaj Srivastava",
@@ -191,43 +192,91 @@ const architectureBlocks = [
   {
     title: "Global Ingress Flow",
     items: [
-      { name: "Route 53", Icon: SiAmazonroute53, note: "DNS routing" },
-      { name: "AWS WAF", Icon: SiAmazonwebservices, note: "L7 filtering" },
-      { name: "NLB (wikiread-active)", Icon: SiAmazonwebservices, note: "Public entrypoint" },
+      { name: "Route 53", Icon: SiAmazonroute53, note: "DNS routing", color: "#8b5cf6" },
+      { name: "AWS WAF", Icon: SiAmazonwebservices, note: "L7 filtering", color: "#ef4444" },
+      { name: "NLB (wikiread-active)", Icon: SiAmazonwebservices, note: "Public entrypoint", color: "#2563eb" },
     ],
   },
   {
     title: "Primary Region VPC (Multi-AZ)",
     items: [
-      { name: "Amazon EKS", Icon: SiAmazoneks, note: "Managed control plane" },
-      { name: "Kubernetes Pods", Icon: SiKubernetes, note: "Django app runtime" },
-      { name: "RDS PostgreSQL", Icon: SiAmazonrds, note: "Private database tier" },
-      { name: "PostgreSQL Engine", Icon: SiPostgresql, note: "Relational data store" },
-      { name: "IAM Roles", Icon: SiAmazoniam, note: "Access control" },
-      { name: "Secrets Manager", Icon: SiAmazonwebservices, note: "App secrets delivery" },
+      { name: "Amazon EKS", Icon: SiAmazoneks, note: "Managed control plane", color: "#f59e0b" },
+      { name: "Kubernetes Pods", Icon: SiKubernetes, note: "Django app runtime", color: "#2563eb" },
+      { name: "RDS PostgreSQL", Icon: SiAmazonrds, note: "Private database tier", color: "#1d4ed8" },
+      { name: "PostgreSQL Engine", Icon: SiPostgresql, note: "Relational data store", color: "#336791" },
+      { name: "IAM Roles", Icon: SiAmazoniam, note: "Access control", color: "#f97316" },
+      { name: "Secrets Manager", Icon: SiAmazonwebservices, note: "App secrets delivery", color: "#0891b2" },
     ],
   },
   {
     title: "Integrated DevOps Pipeline",
     items: [
-      { name: "GitHub", Icon: SiGithub, note: "Source of truth" },
-      { name: "CodePipeline", Icon: LuWorkflow, note: "Release orchestration" },
-      { name: "CodeBuild", Icon: SiAmazonwebservices, note: "Build/deploy jobs" },
-      { name: "Amazon ECR", Icon: SiDocker, note: "Container image registry" },
-      { name: "Terraform", Icon: SiTerraform, note: "Infrastructure as code" },
-      { name: "Argo CD + Rollouts", Icon: SiArgo, note: "GitOps and blue/green" },
-      { name: "Helm", Icon: SiHelm, note: "Cluster package manager" },
-      { name: "S3 + DynamoDB", Icon: SiAmazondynamodb, note: "Terraform state + lock" },
-      { name: "S3 Plan Artifacts", Icon: SiAmazons3, note: "Plan review storage" },
+      { name: "GitHub", Icon: SiGithub, note: "Source of truth", color: "#111827" },
+      { name: "CodePipeline", Icon: LuWorkflow, note: "Release orchestration", color: "#16a34a" },
+      { name: "CodeBuild", Icon: SiAmazonwebservices, note: "Build/deploy jobs", color: "#0284c7" },
+      { name: "Amazon ECR", Icon: SiDocker, note: "Container image registry", color: "#0ea5e9" },
+      { name: "Terraform", Icon: SiTerraform, note: "Infrastructure as code", color: "#7c3aed" },
+      { name: "Argo CD + Rollouts", Icon: SiArgo, note: "GitOps and blue/green", color: "#2563eb" },
+      { name: "Helm", Icon: SiHelm, note: "Cluster package manager", color: "#0f766e" },
+      { name: "S3 + DynamoDB", Icon: SiAmazondynamodb, note: "Terraform state + lock", color: "#ca8a04" },
+      { name: "S3 Plan Artifacts", Icon: SiAmazons3, note: "Plan review storage", color: "#ea580c" },
     ],
   },
   {
     title: "Observability & Scaling",
     items: [
-      { name: "CloudWatch", Icon: SiAmazoncloudwatch, note: "Logs and metrics" },
-      { name: "metrics-server", Icon: SiKubernetes, note: "K8s resource metrics" },
-      { name: "HPA", Icon: SiKubernetes, note: "Horizontal autoscaling" },
-      { name: "SNS Approval Alerts", Icon: SiAmazonwebservices, note: "Plan notifications" },
+      { name: "CloudWatch", Icon: SiAmazoncloudwatch, note: "Logs and metrics", color: "#f59e0b" },
+      { name: "metrics-server", Icon: SiKubernetes, note: "K8s resource metrics", color: "#2563eb" },
+      { name: "HPA", Icon: SiKubernetes, note: "Horizontal autoscaling", color: "#0ea5e9" },
+      { name: "SNS Approval Alerts", Icon: SiAmazonwebservices, note: "Plan notifications", color: "#eab308" },
+    ],
+  },
+];
+
+const infraFlow = [
+  "GitHub",
+  "CodePipeline",
+  "CodeBuild",
+  "Amazon ECR",
+  "Argo CD",
+  "Amazon EKS",
+];
+
+const infraHighlights = [
+  {
+    title: "Runtime Architecture",
+    points: [
+      "Public ingress via internet-facing NLB service (`wikiread-active`).",
+      "Django workloads run on EKS node groups in private app subnets.",
+      "RDS PostgreSQL remains private in dedicated DB subnets.",
+      "Secrets are sourced from AWS Secrets Manager and injected into Kubernetes.",
+    ],
+  },
+  {
+    title: "Infrastructure Delivery",
+    points: [
+      "Source -> Terraform Plan -> SNS notification -> Manual Approval -> Apply.",
+      "Plan outputs stored in S3 for review and change auditability.",
+      "Terraform state stored in S3 with DynamoDB state locking.",
+      "Pipeline variables are injected via TF_VAR-based controls.",
+    ],
+  },
+  {
+    title: "GitOps Application Delivery",
+    points: [
+      "CodeBuild builds/pushes container image into Amazon ECR.",
+      "Deploy stage updates Argo CD Application image reference.",
+      "Argo CD syncs desired state from Git to EKS automatically.",
+      "Argo Rollouts provides blue/green promotion via active/preview services.",
+    ],
+  },
+  {
+    title: "Reliability & Operations",
+    points: [
+      "Horizontal scaling enabled through HPA with metrics-server.",
+      "CloudWatch observability addon provides runtime telemetry.",
+      "Manual infra approval reduces unsafe production drift.",
+      "Modular Terraform improves repeatability and maintainability.",
     ],
   },
 ];
@@ -433,9 +482,32 @@ function App() {
 
         <section id="wikiread-infra" className="section island reveal">
           <h2>Wikiread Infrastructure</h2>
-          <p>
-            Production architecture implemented for WikiRead using AWS, Kubernetes, Terraform, and GitOps delivery.
+          <p className="infra-intro">
+            Multi-layer production architecture for WikiRead using AWS + Kubernetes + Terraform with GitOps
+            deployment, approval-governed infrastructure changes, and autoscaling runtime operations.
           </p>
+
+          <div className="infra-flow-strip">
+            {infraFlow.map((step, idx) => (
+              <div className="infra-flow-node" key={step}>
+                <span>{step}</span>
+                {idx < infraFlow.length - 1 && <FiArrowRight className="infra-flow-arrow" aria-hidden="true" />}
+              </div>
+            ))}
+          </div>
+
+          <div className="infra-summary-grid">
+            {infraHighlights.map((block) => (
+              <article className="infra-summary-card" key={block.title}>
+                <h3>{block.title}</h3>
+                <ul>
+                  {block.points.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
 
           <div className="infra-architecture-grid">
             {architectureBlocks.map((block) => (
@@ -444,7 +516,9 @@ function App() {
                 <div className="service-list">
                   {block.items.map((item) => (
                     <div className="service-item" key={item.name}>
-                      <item.Icon className="service-icon" aria-hidden="true" />
+                      <span className="service-icon-wrap">
+                        <item.Icon className="service-icon" style={{ color: item.color }} aria-hidden="true" />
+                      </span>
                       <div>
                         <p className="service-name">{item.name}</p>
                         <p className="service-note">{item.note}</p>
