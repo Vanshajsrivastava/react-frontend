@@ -208,18 +208,18 @@ const architectureBlocks = [
     items: [
       { name: "Route 53", Icon: SiAmazonroute53, note: "DNS routing", color: "#8b5cf6" },
       { name: "AWS WAF", Icon: FaShieldAlt, note: "L7 filtering", color: "#ef4444" },
-      { name: "NLB (wikiread-active)", Icon: FaNetworkWired, note: "Public entrypoint", color: "#2563eb" },
+      { name: "NLB (wikiread-active)", Icon: FaNetworkWired, note: "Public entrypoint", color: "#ea580c" },
     ],
   },
   {
     title: "Primary Region VPC (Multi-AZ)",
     items: [
       { name: "Amazon EKS", Icon: SiAmazoneks, note: "Managed control plane", color: "#f59e0b" },
-      { name: "Kubernetes Pods", Icon: SiKubernetes, note: "Django app runtime", color: "#2563eb" },
-      { name: "RDS PostgreSQL", Icon: SiAmazonrds, note: "Private database tier", color: "#1d4ed8" },
+      { name: "Kubernetes Pods", Icon: SiKubernetes, note: "Django app runtime", color: "#326ce5" },
+      { name: "RDS PostgreSQL", Icon: SiAmazonrds, note: "Private database tier", color: "#ca8a04" },
       { name: "PostgreSQL Engine", Icon: SiPostgresql, note: "Relational data store", color: "#336791" },
       { name: "IAM Roles", Icon: SiAmazoniam, note: "Access control", color: "#f97316" },
-      { name: "Secrets Manager", Icon: FaKey, note: "App secrets delivery", color: "#0891b2" },
+      { name: "Secrets Manager", Icon: FaKey, note: "App secrets delivery", color: "#10b981" },
     ],
   },
   {
@@ -227,10 +227,10 @@ const architectureBlocks = [
     items: [
       { name: "GitHub", Icon: SiGithub, note: "Source of truth", color: "#111827" },
       { name: "CodePipeline", Icon: FaCodeBranch, note: "Release orchestration", color: "#16a34a" },
-      { name: "CodeBuild", Icon: FaCogs, note: "Build/deploy jobs", color: "#0284c7" },
+      { name: "CodeBuild", Icon: FaCogs, note: "Build/deploy jobs", color: "#0ea5e9" },
       { name: "Amazon ECR", Icon: SiDocker, note: "Container image registry", color: "#0ea5e9" },
       { name: "Terraform", Icon: SiTerraform, note: "Infrastructure as code", color: "#7c3aed" },
-      { name: "Argo CD + Rollouts", Icon: SiArgo, note: "GitOps and blue/green", color: "#2563eb" },
+      { name: "Argo CD + Rollouts", Icon: SiArgo, note: "GitOps and blue/green", color: "#f97316" },
       { name: "Helm", Icon: SiHelm, note: "Cluster package manager", color: "#0f766e" },
       { name: "S3 + DynamoDB", Icon: SiAmazondynamodb, note: "Terraform state + lock", color: "#ca8a04" },
       { name: "S3 Plan Artifacts", Icon: SiAmazons3, note: "Plan review storage", color: "#ea580c" },
@@ -241,7 +241,7 @@ const architectureBlocks = [
     items: [
       { name: "CloudWatch", Icon: SiAmazoncloudwatch, note: "Logs and metrics", color: "#f59e0b" },
       { name: "metrics-server", Icon: SiKubernetes, note: "K8s resource metrics", color: "#2563eb" },
-      { name: "HPA", Icon: SiKubernetes, note: "Horizontal autoscaling", color: "#0ea5e9" },
+      { name: "HPA", Icon: SiKubernetes, note: "Horizontal autoscaling", color: "#22c55e" },
       { name: "SNS Approval Alerts", Icon: FaBell, note: "Plan notifications", color: "#eab308" },
     ],
   },
@@ -275,6 +275,36 @@ function getSkillIcon(item) {
   if (key.includes("networkx") || key.includes("groove") || key.includes("dependency parsing")) return TbTopologyStarRing3;
   if (key.includes("openai") || key.includes("gpt")) return SiOpenai;
   return FaCodeBranch;
+}
+
+function getSkillColor(item) {
+  const key = item.toLowerCase();
+
+  if (key.includes("aws")) return "#ff9900";
+  if (key.includes("azure")) return "#0078d4";
+  if (key.includes("terraform")) return "#7b42bc";
+  if (key.includes("cloudformation")) return "#f59e0b";
+  if (key.includes("github")) return "#111827";
+  if (key.includes("jenkins")) return "#d24939";
+  if (key.includes("codepipeline")) return "#16a34a";
+  if (key.includes("codedeploy")) return "#0284c7";
+  if (key.includes("docker")) return "#2496ed";
+  if (key.includes("eks") || key.includes("kubernetes")) return "#326ce5";
+  if (key.includes("argocd")) return "#1f6feb";
+  if (key.includes("helm")) return "#0f766e";
+  if (key.includes("cloudwatch")) return "#f59e0b";
+  if (key.includes("prometheus")) return "#e6522c";
+  if (key.includes("grafana")) return "#f46800";
+  if (key.includes("loki")) return "#f2cc0c";
+  if (key.includes("promtail")) return "#22c55e";
+  if (key.includes("python")) return "#3776ab";
+  if (key.includes("javascript")) return "#f7df1e";
+  if (key.includes("ruby")) return "#cc342d";
+  if (key.includes("bash")) return "#4eaa25";
+  if (key.includes("django")) return "#092e20";
+  if (key.includes("rbac") || key.includes("authentication") || key.includes("authorization")) return "#ef4444";
+  if (key.includes("openai") || key.includes("gpt")) return "#10a37f";
+  return "#64748b";
 }
 
 const infraFlow = [
@@ -503,7 +533,13 @@ function App() {
                     <li key={item} className="skill-item">
                       {(() => {
                         const Icon = getSkillIcon(item);
-                        return <Icon className="skill-item-icon" aria-hidden="true" />;
+                        return (
+                          <Icon
+                            className="skill-item-icon"
+                            style={{ color: getSkillColor(item) }}
+                            aria-hidden="true"
+                          />
+                        );
                       })()}
                       <span>{item}</span>
                     </li>
