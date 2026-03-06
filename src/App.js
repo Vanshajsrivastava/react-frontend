@@ -402,15 +402,6 @@ function App() {
           <a href="#education">Education</a>
           <a href="#skills">Skills</a>
           <a href="#projects">Projects</a>
-          <a
-            href="#wikiread-infra"
-            onClick={(e) => {
-              e.preventDefault();
-              setInfraOpen(true);
-            }}
-          >
-            Wikiread Infra
-          </a>
           <a href="#blogs">Blogs</a>
           <a href="#contact">Contact</a>
         </nav>
