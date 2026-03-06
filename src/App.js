@@ -8,7 +8,6 @@ import {
   SiAmazonrds,
   SiAmazonroute53,
   SiAmazons3,
-  SiAmazonwebservices,
   SiArgo,
   SiDocker,
   SiGithub,
@@ -29,7 +28,7 @@ import {
 } from "react-icons/si";
 import { LuWorkflow } from "react-icons/lu";
 import { FiArrowRight, FiCloud } from "react-icons/fi";
-import { FaAws, FaLinux, FaCodeBranch } from "react-icons/fa";
+import { FaAws, FaLinux, FaCodeBranch, FaShieldAlt, FaNetworkWired, FaKey, FaBell, FaCogs } from "react-icons/fa";
 import { TbTopologyStarRing3 } from "react-icons/tb";
 import { MdSecurity } from "react-icons/md";
 import { IoChevronDown } from "react-icons/io5";
@@ -208,8 +207,8 @@ const architectureBlocks = [
     title: "Global Ingress Flow",
     items: [
       { name: "Route 53", Icon: SiAmazonroute53, note: "DNS routing", color: "#8b5cf6" },
-      { name: "AWS WAF", Icon: SiAmazonwebservices, note: "L7 filtering", color: "#ef4444" },
-      { name: "NLB (wikiread-active)", Icon: SiAmazonwebservices, note: "Public entrypoint", color: "#2563eb" },
+      { name: "AWS WAF", Icon: FaShieldAlt, note: "L7 filtering", color: "#ef4444" },
+      { name: "NLB (wikiread-active)", Icon: FaNetworkWired, note: "Public entrypoint", color: "#2563eb" },
     ],
   },
   {
@@ -220,15 +219,15 @@ const architectureBlocks = [
       { name: "RDS PostgreSQL", Icon: SiAmazonrds, note: "Private database tier", color: "#1d4ed8" },
       { name: "PostgreSQL Engine", Icon: SiPostgresql, note: "Relational data store", color: "#336791" },
       { name: "IAM Roles", Icon: SiAmazoniam, note: "Access control", color: "#f97316" },
-      { name: "Secrets Manager", Icon: SiAmazonwebservices, note: "App secrets delivery", color: "#0891b2" },
+      { name: "Secrets Manager", Icon: FaKey, note: "App secrets delivery", color: "#0891b2" },
     ],
   },
   {
     title: "Integrated DevOps Pipeline",
     items: [
       { name: "GitHub", Icon: SiGithub, note: "Source of truth", color: "#111827" },
-      { name: "CodePipeline", Icon: LuWorkflow, note: "Release orchestration", color: "#16a34a" },
-      { name: "CodeBuild", Icon: SiAmazonwebservices, note: "Build/deploy jobs", color: "#0284c7" },
+      { name: "CodePipeline", Icon: FaCodeBranch, note: "Release orchestration", color: "#16a34a" },
+      { name: "CodeBuild", Icon: FaCogs, note: "Build/deploy jobs", color: "#0284c7" },
       { name: "Amazon ECR", Icon: SiDocker, note: "Container image registry", color: "#0ea5e9" },
       { name: "Terraform", Icon: SiTerraform, note: "Infrastructure as code", color: "#7c3aed" },
       { name: "Argo CD + Rollouts", Icon: SiArgo, note: "GitOps and blue/green", color: "#2563eb" },
@@ -243,7 +242,7 @@ const architectureBlocks = [
       { name: "CloudWatch", Icon: SiAmazoncloudwatch, note: "Logs and metrics", color: "#f59e0b" },
       { name: "metrics-server", Icon: SiKubernetes, note: "K8s resource metrics", color: "#2563eb" },
       { name: "HPA", Icon: SiKubernetes, note: "Horizontal autoscaling", color: "#0ea5e9" },
-      { name: "SNS Approval Alerts", Icon: SiAmazonwebservices, note: "Plan notifications", color: "#eab308" },
+      { name: "SNS Approval Alerts", Icon: FaBell, note: "Plan notifications", color: "#eab308" },
     ],
   },
 ];
@@ -257,7 +256,8 @@ function getSkillIcon(item) {
   if (key.includes("cloudformation")) return LuWorkflow;
   if (key.includes("github actions")) return SiGithubactions;
   if (key.includes("jenkins")) return SiJenkins;
-  if (key.includes("codepipeline") || key.includes("codedeploy")) return LuWorkflow;
+  if (key.includes("codepipeline")) return FaCodeBranch;
+  if (key.includes("codedeploy")) return FaCogs;
   if (key.includes("docker")) return SiDocker;
   if (key.includes("eks") || key.includes("kubernetes")) return SiKubernetes;
   if (key.includes("argocd")) return SiArgo;
