@@ -215,6 +215,7 @@ function App() {
           <a href="#education">Education</a>
           <a href="#skills">Skills</a>
           <a href="#projects">Projects</a>
+          <a href="#wikiread-infra">Wikiread Infra</a>
           <a href="#blogs">Blogs</a>
           <a href="#contact">Contact</a>
         </nav>
@@ -364,6 +365,75 @@ function App() {
                 </div>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section id="wikiread-infra" className="section island reveal">
+          <h2>Wikiread Infrastructure</h2>
+          <p>
+            Multi-layer production architecture on AWS using Terraform + EKS + Argo CD GitOps with governed
+            infra approvals and blue/green application delivery.
+          </p>
+
+          <div className="infra-chip-row">
+            <span className="infra-chip">AWS EKS</span>
+            <span className="infra-chip">RDS PostgreSQL (Private)</span>
+            <span className="infra-chip">CodePipeline + CodeBuild</span>
+            <span className="infra-chip">Argo CD + Argo Rollouts</span>
+            <span className="infra-chip">Terraform Modules</span>
+            <span className="infra-chip">SNS Approval Gate</span>
+            <span className="infra-chip">CloudWatch + HPA</span>
+          </div>
+
+          <div className="infra-grid">
+            <article className="infra-card">
+              <h3>Runtime Architecture</h3>
+              <ul>
+                <li>Public ingress via NLB service (`wikiread-active`).</li>
+                <li>Django pods run on EKS node groups in private app subnets.</li>
+                <li>RDS PostgreSQL remains private in dedicated DB subnets.</li>
+                <li>Secrets loaded from AWS Secrets Manager into Kubernetes Secret.</li>
+              </ul>
+            </article>
+
+            <article className="infra-card">
+              <h3>Infrastructure Delivery</h3>
+              <ul>
+                <li>Source -> Terraform Plan -> SNS notification -> Manual approval -> Apply.</li>
+                <li>Plan output stored in S3 for review and audit trail.</li>
+                <li>State managed with S3 backend and DynamoDB locking.</li>
+                <li>Environment variables passed into CodeBuild via TF_VAR controls.</li>
+              </ul>
+            </article>
+
+            <article className="infra-card">
+              <h3>Application Delivery (GitOps)</h3>
+              <ul>
+                <li>Image built in CodeBuild and pushed to Amazon ECR.</li>
+                <li>Deploy job updates Argo CD Application image tag.</li>
+                <li>Argo CD syncs desired state from Git to EKS automatically.</li>
+                <li>Argo Rollouts handles blue/green promotion with preview/active services.</li>
+              </ul>
+            </article>
+
+            <article className="infra-card">
+              <h3>Operational Outcomes</h3>
+              <ul>
+                <li>Repeatable provisioning using parameterized Terraform modules.</li>
+                <li>Safer changes through approval gate and pipeline auditability.</li>
+                <li>Horizontal scaling through HPA and metrics-server.</li>
+                <li>CloudWatch observability for production health signals.</li>
+              </ul>
+            </article>
+          </div>
+
+          <div className="project-links infra-links">
+            <a href="https://github.com/Vanshajsrivastava/Wikiread" target="_blank" rel="noreferrer">
+              View Wikiread Repository
+            </a>
+            <a href="https://wikiread-lib.vercel.app/" target="_blank" rel="noreferrer">
+              Live Demo
+            </a>
           </div>
         </section>
 
