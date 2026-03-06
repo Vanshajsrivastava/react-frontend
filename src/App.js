@@ -514,7 +514,7 @@ function App() {
           <h2>Skills</h2>
           <div className="skills-grid">
             {skillGroups.map((group) => (
-              <details className="skill-card skill-dropdown" key={group.title} open>
+              <details className="skill-card skill-dropdown" key={group.title}>
                 <summary className="skill-summary">
                   <h3>{group.title}</h3>
                   <IoChevronDown className="skill-chevron" aria-hidden="true" />

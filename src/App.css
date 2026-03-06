@@ -507,7 +507,8 @@ main {
 }
 
 .skill-card {
-  height: fit-content;
+  height: auto;
+  align-self: start;
 }
 
 .skill-card:hover,
