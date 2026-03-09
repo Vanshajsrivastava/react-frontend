@@ -403,8 +403,8 @@ function getCertificationVisual(cert) {
   const normalized = `${cert.title} ${cert.issuer}`.toLowerCase();
   if (normalized.includes("python")) {
     return {
-      icons: [SiPython, SiDjango],
-      tags: ["Python", "Django", "Backend"],
+      icons: [SiPython, FaCogs, LuWorkflow],
+      tags: ["Python", "OOP", "Jupyter", "Projects"],
     };
   }
   if (normalized.includes("aws")) {
