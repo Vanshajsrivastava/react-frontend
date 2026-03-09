@@ -1025,7 +1025,7 @@ main > .section:nth-of-type(even) {
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 12px;
-  border: 1px solid color-mix(in srgb, var(--border) 76%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
   display: grid;
   place-items: center;
   padding: 12px;
@@ -1033,10 +1033,12 @@ main > .section:nth-of-type(even) {
   font-weight: 800;
   letter-spacing: 0.02em;
   color: color-mix(in srgb, var(--text) 90%, var(--accent-2));
-  background:
-    radial-gradient(circle at 20% 18%, color-mix(in srgb, var(--accent-2) 24%, transparent), transparent 52%),
-    radial-gradient(circle at 85% 85%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 56%),
-    color-mix(in srgb, var(--surface-soft) 86%, transparent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--surface-soft) 94%, transparent) 0%,
+    color-mix(in srgb, var(--surface) 92%, transparent) 100%
+  );
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 45%, transparent);
 }
 
 .cert-card h3 {

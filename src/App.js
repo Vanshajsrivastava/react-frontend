@@ -166,7 +166,7 @@ const certifications = [
     link: "https://www.udemy.com/certificate/UC-fa8b1aa9-61a9-4a21-8aa2-1160d0883388/",
   },
   {
-    title: "AWS Certification",
+    title: "AWS Certified Cloud Practitioner",
     issuer: "Amazon Web Services",
     status: "Ongoing Progress",
     link: "",
