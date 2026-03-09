@@ -885,10 +885,12 @@ function App() {
           <div className="certifications-grid">
             {certifications.map((cert) => {
               const visual = getCertificationVisual(cert);
+              const isAwsCert = cert.issuer === "Amazon Web Services";
+              const isPythonCert = /python/i.test(cert.title);
               return (
               <article className="cert-card" key={cert.title}>
                 <div
-                  className={`cert-placeholder ${cert.issuer === "Amazon Web Services" ? "cert-placeholder-aws" : ""}`}
+                  className={`cert-placeholder ${isAwsCert ? "cert-placeholder-aws" : ""} ${isPythonCert ? "cert-placeholder-python" : ""}`}
                   aria-hidden="true"
                 >
                   <div className="cert-placeholder-icons">
