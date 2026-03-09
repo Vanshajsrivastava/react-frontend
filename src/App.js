@@ -316,6 +316,16 @@ const infraFlow = [
   "Amazon EKS",
 ];
 
+const navLinks = [
+  { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
+  { id: "education", label: "Education" },
+  { id: "skills", label: "Skills" },
+  { id: "projects", label: "Projects" },
+  { id: "blogs", label: "Blogs" },
+  { id: "contact", label: "Contact" },
+];
+
 const infraHighlights = [
   {
     title: "Runtime Architecture",
@@ -358,6 +368,11 @@ const infraHighlights = [
 function App() {
   const [theme, setTheme] = useState("light");
   const [infraOpen, setInfraOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("about");
+  const [openSkills, setOpenSkills] = useState(() =>
+    Object.fromEntries(skillGroups.map((group) => [group.title, false]))
+  );
 
   useEffect(() => {
     const stored = localStorage.getItem("theme");
@@ -387,23 +402,56 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const sections = navLinks
+      .map((link) => document.getElementById(link.id))
+      .filter(Boolean);
+
+    if (!sections.length) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]?.target?.id) setActiveSection(visible[0].target.id);
+      },
+      {
+        threshold: [0.2, 0.4, 0.6],
+        rootMargin: "-20% 0px -45% 0px",
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
   const year = useMemo(() => new Date().getFullYear(), []);
 
   return (
     <div className="app-shell">
-      <header className="topbar">
+      <header className={`topbar ${isScrolled ? "is-scrolled" : ""}`}>
         <a className="brand" href="#home">
           VS
         </a>
 
         <nav aria-label="Primary">
-          <a href="#about">About</a>
-          <a href="#experience">Experience</a>
-          <a href="#education">Education</a>
-          <a href="#skills">Skills</a>
-          <a href="#projects">Projects</a>
-          <a href="#blogs">Blogs</a>
-          <a href="#contact">Contact</a>
+          {navLinks.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              className={activeSection === item.id ? "active" : ""}
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
 
         <button
@@ -441,6 +489,10 @@ function App() {
                 className="hero-photo"
                 src="/profile-photo.jpg?v=2"
                 alt="Vanshaj Srivastava"
+                loading="lazy"
+                decoding="async"
+                width="720"
+                height="720"
                 onError={(e) => {
                   e.currentTarget.onerror = null;
                   e.currentTarget.src = "/profile-placeholder.svg";
@@ -514,12 +566,22 @@ function App() {
           <h2>Skills</h2>
           <div className="skills-grid">
             {skillGroups.map((group) => (
-              <details className="skill-card skill-dropdown" key={group.title}>
-                <summary className="skill-summary">
+              <article className="skill-card skill-dropdown" key={group.title}>
+                <button
+                  type="button"
+                  className="skill-summary"
+                  aria-expanded={openSkills[group.title]}
+                  onClick={() =>
+                    setOpenSkills((prev) => ({
+                      ...prev,
+                      [group.title]: !prev[group.title],
+                    }))
+                  }
+                >
                   <h3>{group.title}</h3>
                   <IoChevronDown className="skill-chevron" aria-hidden="true" />
-                </summary>
-                <ul>
+                </button>
+                <ul className={`skill-list ${openSkills[group.title] ? "open" : ""}`}>
                   {group.items.map((item) => (
                     <li key={item} className="skill-item">
                       {(() => {
@@ -536,7 +598,7 @@ function App() {
                     </li>
                   ))}
                 </ul>
-              </details>
+              </article>
             ))}
           </div>
         </section>
