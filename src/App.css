@@ -199,6 +199,7 @@ main {
   grid-template-columns: 1.3fr 0.7fr;
   align-items: center;
   gap: var(--space-3);
+  min-height: 360px;
 }
 
 .hero-content {
@@ -208,14 +209,23 @@ main {
 .hero-photo-wrap {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .hero-photo {
-  width: min(300px, 100%);
+  width: clamp(180px, 18vw, 200px);
+  height: clamp(180px, 18vw, 200px);
+  min-width: 180px;
+  min-height: 180px;
+  max-width: 200px;
+  max-height: 200px;
+  display: block;
+  overflow: hidden;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: 24px;
-  border: 1px solid var(--border);
+  object-position: center 22%;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--border) 75%, var(--accent-2));
   box-shadow: var(--shadow);
   background: var(--surface);
   transition: transform 220ms ease, box-shadow 220ms ease;
@@ -634,7 +644,22 @@ main {
 .project-card {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 8px;
+  min-height: 100%;
+}
+
+.project-card img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 10px 22px color-mix(in srgb, var(--text) 12%, transparent);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.project-card:hover img {
+  transform: scale(1.02);
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--accent-2) 20%, transparent);
 }
 
 .project-card a {
@@ -939,12 +964,20 @@ footer {
   .hero-grid {
     grid-template-columns: 1fr;
     gap: var(--space-2);
+    min-height: unset;
   }
 
-  .hero-photo {
-    width: min(420px, 100%);
-    aspect-ratio: 4 / 5;
-    object-position: center 22%;
+  .hero-content {
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .hero-cta {
+    justify-content: center;
+  }
+
+  .hero-photo-wrap {
+    justify-content: center;
   }
 
   .skills-grid,
