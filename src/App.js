@@ -318,6 +318,23 @@ const infraFlow = [
   "Amazon EKS",
 ];
 
+const cloudInfraKeywords = [
+  "aws",
+  "terraform",
+  "cloud",
+  "kubernetes",
+  "eks",
+  "docker",
+  "argocd",
+  "helm",
+  "sns",
+  "s3",
+  "vpc",
+  "ec2",
+  "iam",
+  "cloudwatch",
+];
+
 const navLinks = [
   { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
@@ -404,16 +421,80 @@ function getProjectSnippet(stack) {
   return "git push origin main";
 }
 
+function hasInfrastructureView(project) {
+  const joined = project.stack.join(" ").toLowerCase();
+  return cloudInfraKeywords.some((keyword) => joined.includes(keyword)) || project.title === "WikiRead Knowledge Base Platform";
+}
+
+function getProjectInfrastructure(project) {
+  if (!project) return null;
+
+  if (project.title === "WikiRead Knowledge Base Platform") {
+    return {
+      mode: "wikiread",
+      title: "Wikiread Infrastructure",
+      intro:
+        "Production-grade multi-layer architecture for WikiRead on AWS.\nBuilt with Terraform, EKS, GitOps, approval-governed CI/CD, and observability-first operations.",
+      flow: infraFlow,
+      highlights: infraHighlights,
+      blocks: architectureBlocks,
+    };
+  }
+
+  const flow = ["GitHub", "CI/CD", "Terraform", "AWS Services"];
+  const services = project.stack.slice(0, 8).map((name) => ({
+    name,
+    Icon: getSkillIcon(name),
+    note: "Core project component",
+    color: getSkillColor(name),
+  }));
+
+  const blocks = [
+    {
+      title: "Core Architecture",
+      points: [
+        `Stack: ${project.stack.join(", ")}`,
+        project.problem,
+        project.impact,
+      ],
+    },
+    {
+      title: "Delivery Model",
+      points: [
+        "Source-controlled infrastructure and code workflows.",
+        "Automated build/deploy path aligned with project stack.",
+        "Operational visibility and repeatable release behavior.",
+      ],
+    },
+  ];
+
+  return {
+    mode: "generic",
+    title: `${project.title} Infrastructure`,
+    intro: "Infrastructure and delivery architecture view for this cloud project.",
+    flow,
+    blocks,
+    services,
+  };
+}
+
 function highlightExperienceText(text) {
   const pattern =
-    /(\b\d+\+?\b|\b\d+%\b|CI\/CD pipelines?|AWS services?|Kubernetes|Terraform|microservices?|EKS|CloudWatch|Grafana|ArgoCD|Jenkins|GitHub Actions)/gi;
+    /(\b\d+\+?\b|\b\d+%\b|CI\/CD pipelines?|AWS services?|AWS|EC2|VPC|IAM|Auto Scaling|Jenkins|GitHub Actions|CloudWatch|Grafana|Loki|Terraform|CloudFormation|ArgoCD|Kubernetes|EKS|PyTest|Robot Framework|microservices?)/gi;
   const parts = text.split(pattern);
 
   return parts.map((part, idx) => {
     if (!part) return null;
+    if (part.match(/^\d+\+?$|^\d+%$/i)) {
+      return (
+        <span key={`${part}-${idx}`} className="metric-highlight-number">
+          {part}
+        </span>
+      );
+    }
     if (part.match(pattern)) {
       return (
-        <span key={`${part}-${idx}`} className="metric-highlight">
+        <span key={`${part}-${idx}`} className="metric-highlight-tech">
           {part}
         </span>
       );
@@ -424,7 +505,7 @@ function highlightExperienceText(text) {
 
 function App() {
   const [theme, setTheme] = useState("light");
-  const [infraOpen, setInfraOpen] = useState(false);
+  const [selectedInfraProject, setSelectedInfraProject] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("about");
   const [openSkills, setOpenSkills] = useState(() =>
@@ -491,6 +572,10 @@ function App() {
   }, []);
 
   const year = useMemo(() => new Date().getFullYear(), []);
+  const infraConfig = useMemo(
+    () => getProjectInfrastructure(selectedInfraProject),
+    [selectedInfraProject]
+  );
 
   return (
     <div className="app-shell">
@@ -734,20 +819,19 @@ function App() {
                   <a href={project.repo} target="_blank" rel="noreferrer">
                     View Repository
                   </a>
-                  {project.title === "WikiRead Knowledge Base Platform" ? (
+                  {hasInfrastructureView(project) ? (
                     <button
                       type="button"
                       className="infra-open-btn"
-                      onClick={() => setInfraOpen(true)}
+                      onClick={() => setSelectedInfraProject(project)}
                     >
                       View Infrastructure
                     </button>
-                  ) : (
-                    project.demo && (
+                  ) : null}
+                  {project.demo && (
                     <a href={project.demo} target="_blank" rel="noreferrer">
                       Live Demo
                     </a>
-                    )
                   )}
                 </div>
               </article>
@@ -781,19 +865,19 @@ function App() {
         </section>
       </main>
 
-      {infraOpen && (
-        <div className="infra-modal-overlay" onClick={() => setInfraOpen(false)}>
+      {infraConfig && (
+        <div className="infra-modal-overlay" onClick={() => setSelectedInfraProject(null)}>
           <section
             id="wikiread-infra"
             className="infra-modal"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="infra-modal-head">
-              <h2>Wikiread Infrastructure</h2>
+              <h2>{infraConfig.title}</h2>
               <button
                 type="button"
                 className="infra-close-btn"
-                onClick={() => setInfraOpen(false)}
+                onClick={() => setSelectedInfraProject(null)}
                 aria-label="Close infrastructure view"
               >
                 ✕
@@ -801,22 +885,29 @@ function App() {
             </div>
 
             <p className="infra-intro">
-              Production-grade multi-layer architecture for WikiRead on AWS.
-              <br />
-              Built with Terraform, EKS, GitOps, approval-governed CI/CD, and observability-first operations.
+              {infraConfig.intro}
             </p>
 
             <div className="infra-flow-strip">
-              {infraFlow.map((step, idx) => (
+              {infraConfig.flow.map((step, idx) => (
                 <div className="infra-flow-node" key={step}>
                   <span>{step}</span>
-                  {idx < infraFlow.length - 1 && <FiArrowRight className="infra-flow-arrow" aria-hidden="true" />}
+                  {idx < infraConfig.flow.length - 1 && <FiArrowRight className="infra-flow-arrow" aria-hidden="true" />}
                 </div>
               ))}
             </div>
 
             <div className="infra-summary-grid">
-              {infraHighlights.map((block) => (
+              {infraConfig.highlights ? infraConfig.highlights.map((block) => (
+                <article className="infra-summary-card" key={block.title}>
+                  <h3>{block.title}</h3>
+                  <ul>
+                    {block.points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                </article>
+              )) : infraConfig.blocks.map((block) => (
                 <article className="infra-summary-card" key={block.title}>
                   <h3>{block.title}</h3>
                   <ul>
@@ -829,7 +920,7 @@ function App() {
             </div>
 
             <div className="infra-architecture-grid">
-              {architectureBlocks.map((block) => (
+              {infraConfig.blocks && infraConfig.mode === "wikiread" ? infraConfig.blocks.map((block) => (
                 <article className="infra-architecture-block" key={block.title}>
                   <h3>{block.title}</h3>
                   <div className="service-list">
@@ -846,7 +937,24 @@ function App() {
                     ))}
                   </div>
                 </article>
-              ))}
+              )) : (
+                <article className="infra-architecture-block">
+                  <h3>Service Components</h3>
+                  <div className="service-list">
+                    {infraConfig.services?.map((item) => (
+                      <div className="service-item" key={item.name}>
+                        <span className="service-icon-wrap">
+                          <item.Icon className="service-icon" style={{ color: item.color }} aria-hidden="true" />
+                        </span>
+                        <div>
+                          <p className="service-name">{item.name}</p>
+                          <p className="service-note">{item.note}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+              )}
             </div>
           </section>
         </div>

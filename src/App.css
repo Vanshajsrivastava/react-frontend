@@ -258,12 +258,12 @@ main {
 }
 
 .hero-photo {
-  width: clamp(200px, 22vw, 220px);
-  height: clamp(200px, 22vw, 220px);
-  min-width: 200px;
-  min-height: 200px;
-  max-width: 220px;
-  max-height: 220px;
+  width: 180px;
+  height: 180px;
+  min-width: 180px;
+  min-height: 180px;
+  max-width: 180px;
+  max-height: 180px;
   display: block;
   overflow: hidden;
   aspect-ratio: 1 / 1;
@@ -424,17 +424,17 @@ main {
 }
 
 .section {
-  margin-top: 80px;
-  padding: 16px 0;
+  margin-top: 0;
+  padding: 80px 0;
 }
 
 main > .section:nth-of-type(odd) {
-  background: color-mix(in srgb, var(--section-bg-a) 92%, transparent);
-  border-radius: 20px;
+  background: transparent;
+  border-radius: 0;
 }
 
 main > .section:nth-of-type(even) {
-  background: color-mix(in srgb, var(--section-bg-b) 92%, transparent);
+  background: color-mix(in srgb, var(--section-bg-a) 70%, transparent);
   border-radius: 20px;
 }
 
@@ -661,12 +661,23 @@ main > .section:nth-of-type(even) {
   margin-top: 0.58rem;
 }
 
-.metric-highlight {
-  color: var(--accent);
+.metric-highlight-tech {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 8px;
+  margin: 0 1px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent-2) 28%, var(--border));
+  background: color-mix(in srgb, var(--accent-2) 12%, transparent);
+  color: color-mix(in srgb, var(--accent-2) 78%, var(--text));
+  font-size: 0.92em;
+  font-weight: 700;
+}
+
+.metric-highlight-number {
+  color: color-mix(in srgb, var(--accent-2) 86%, var(--accent));
   font-weight: 800;
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
-  border-radius: 8px;
-  padding: 0 4px;
+  font-size: 1.04em;
 }
 
 .skills-grid,
@@ -1282,12 +1293,12 @@ footer {
   }
 
   .hero-photo {
-    width: 200px;
-    height: 200px;
-    min-width: 200px;
-    min-height: 200px;
-    max-width: 200px;
-    max-height: 200px;
+    width: 180px;
+    height: 180px;
+    min-width: 180px;
+    min-height: 180px;
+    max-width: 180px;
+    max-height: 180px;
   }
 
   .experience-list {
