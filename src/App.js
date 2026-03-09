@@ -404,6 +404,24 @@ function getProjectSnippet(stack) {
   return "git push origin main";
 }
 
+function highlightExperienceText(text) {
+  const pattern =
+    /(\b\d+\+?\b|\b\d+%\b|CI\/CD pipelines?|AWS services?|Kubernetes|Terraform|microservices?|EKS|CloudWatch|Grafana|ArgoCD|Jenkins|GitHub Actions)/gi;
+  const parts = text.split(pattern);
+
+  return parts.map((part, idx) => {
+    if (!part) return null;
+    if (part.match(pattern)) {
+      return (
+        <span key={`${part}-${idx}`} className="metric-highlight">
+          {part}
+        </span>
+      );
+    }
+    return <span key={`${part}-${idx}`}>{part}</span>;
+  });
+}
+
 function App() {
   const [theme, setTheme] = useState("light");
   const [infraOpen, setInfraOpen] = useState(false);
@@ -589,7 +607,7 @@ function App() {
                 </p>
                 <ul>
                   {exp.highlights.map((point) => (
-                    <li key={point}>{point}</li>
+                    <li key={point}>{highlightExperienceText(point)}</li>
                   ))}
                 </ul>
               </article>
