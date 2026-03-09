@@ -401,6 +401,12 @@ const infraHighlights = [
 
 function getCertificationVisual(cert) {
   const normalized = `${cert.title} ${cert.issuer}`.toLowerCase();
+  if (normalized.includes("python")) {
+    return {
+      icons: [SiPython, SiDjango],
+      tags: ["Python", "Django", "Backend"],
+    };
+  }
   if (normalized.includes("aws")) {
     return {
       icons: [FaAws, SiAmazons3, SiAmazoneks],
