@@ -11,7 +11,7 @@
   --surface: #ffffff;
   --surface-soft: #f8fafc;
   --text: #0f172a;
-  --muted: #64748b;
+  --muted: #475569;
   --border: #e2e8f0;
   --accent: #3b82f6;
   --accent-2: #7c3aed;
@@ -28,7 +28,7 @@
   --surface: #111827;
   --surface-soft: #0f172a;
   --text: #f1f5f9;
-  --muted: #94a3b8;
+  --muted: #b7c5da;
   --border: #1e293b;
   --accent: #60a5fa;
   --accent-2: #a78bfa;
@@ -503,6 +503,8 @@ main > .section:nth-of-type(even) {
 
 .section p {
   color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.75;
 }
 
 .focus-grid {
@@ -648,6 +650,7 @@ main > .section:nth-of-type(even) {
 .exp-meta {
   margin: 0.35rem 0 0.7rem;
   font-weight: 600;
+  color: color-mix(in srgb, var(--text) 82%, var(--muted));
 }
 
 .experience-card ul {
@@ -655,6 +658,7 @@ main > .section:nth-of-type(even) {
   padding-left: 1.15rem;
   color: var(--muted);
   line-height: 1.62;
+  font-size: 1rem;
 }
 
 .experience-card li + li {
@@ -680,15 +684,23 @@ main > .section:nth-of-type(even) {
   font-size: 1.04em;
 }
 
-.skills-grid,
 .project-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-2);
 }
 
-.skills-grid {
+.skills-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
   align-items: start;
+}
+
+.skills-column {
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
 }
 
 .skill-card,
@@ -725,6 +737,7 @@ main > .section:nth-of-type(even) {
 
 .skill-dropdown {
   padding: 12px 14px;
+  border-width: 1px;
 }
 
 .skill-summary {
@@ -786,6 +799,8 @@ main > .section:nth-of-type(even) {
   box-shadow: 0 2px 8px color-mix(in srgb, var(--text) 6%, transparent);
   transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease, background 150ms ease;
   width: fit-content;
+  color: color-mix(in srgb, var(--text) 88%, var(--muted));
+  font-weight: 600;
 }
 
 .skill-item:hover {
@@ -800,6 +815,8 @@ main > .section:nth-of-type(even) {
 
 .project-card p {
   color: var(--muted);
+  font-size: 1.04rem;
+  line-height: 1.72;
 }
 
 .project-card {
@@ -1310,7 +1327,7 @@ footer {
     content: none;
   }
 
-  .skills-grid,
+  .skills-columns,
   .project-grid,
   .education-list,
   .infra-summary-grid,

@@ -572,6 +572,13 @@ function App() {
   }, []);
 
   const year = useMemo(() => new Date().getFullYear(), []);
+  const skillColumns = useMemo(() => {
+    const cols = [[], []];
+    skillGroups.forEach((group, index) => {
+      cols[index % 2].push(group);
+    });
+    return cols;
+  }, []);
   const infraConfig = useMemo(
     () => getProjectInfrastructure(selectedInfraProject),
     [selectedInfraProject]
@@ -718,41 +725,45 @@ function App() {
 
         <section id="skills" className="section island reveal">
           <h2>Skills</h2>
-          <div className="skills-grid">
-            {skillGroups.map((group) => (
-              <article className="skill-card skill-dropdown" key={group.title}>
-                <button
-                  type="button"
-                  className="skill-summary"
-                  aria-expanded={openSkills[group.title]}
-                  onClick={() =>
-                    setOpenSkills((prev) => ({
-                      ...prev,
-                      [group.title]: !prev[group.title],
-                    }))
-                  }
-                >
-                  <h3>{group.title}</h3>
-                  <IoChevronDown className="skill-chevron" aria-hidden="true" />
-                </button>
-                <ul className={`skill-list ${openSkills[group.title] ? "open" : ""}`}>
-                  {group.items.map((item) => (
-                    <li key={item} className="skill-item">
-                      {(() => {
-                        const Icon = getSkillIcon(item);
-                        return (
-                          <Icon
-                            className="skill-item-icon"
-                            style={{ color: getSkillColor(item) }}
-                            aria-hidden="true"
-                          />
-                        );
-                      })()}
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </article>
+          <div className="skills-columns">
+            {skillColumns.map((column, colIndex) => (
+              <div className="skills-column" key={`skills-col-${colIndex}`}>
+                {column.map((group) => (
+                  <article className="skill-card skill-dropdown" key={group.title}>
+                    <button
+                      type="button"
+                      className="skill-summary"
+                      aria-expanded={openSkills[group.title]}
+                      onClick={() =>
+                        setOpenSkills((prev) => ({
+                          ...prev,
+                          [group.title]: !prev[group.title],
+                        }))
+                      }
+                    >
+                      <h3>{group.title}</h3>
+                      <IoChevronDown className="skill-chevron" aria-hidden="true" />
+                    </button>
+                    <ul className={`skill-list ${openSkills[group.title] ? "open" : ""}`}>
+                      {group.items.map((item) => (
+                        <li key={item} className="skill-item">
+                          {(() => {
+                            const Icon = getSkillIcon(item);
+                            return (
+                              <Icon
+                                className="skill-item-icon"
+                                style={{ color: getSkillColor(item) }}
+                                aria-hidden="true"
+                              />
+                            );
+                          })()}
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                ))}
+              </div>
             ))}
           </div>
         </section>
