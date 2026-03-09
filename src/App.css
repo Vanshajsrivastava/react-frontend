@@ -719,9 +719,10 @@ main > .section:nth-of-type(even) {
   gap: 8px;
   min-height: 100%;
   transition: transform 170ms ease, box-shadow 170ms ease, border-color 170ms ease;
+  overflow: hidden;
 }
 
-.project-media,
+.project-thumb,
 .project-card img {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -729,20 +730,64 @@ main > .section:nth-of-type(even) {
   border-radius: 12px;
   box-shadow: 0 10px 22px color-mix(in srgb, var(--text) 12%, transparent);
   transition: transform 180ms ease, box-shadow 180ms ease;
+  border: 1px solid color-mix(in srgb, var(--border) 76%, transparent);
 }
 
-.project-media {
-  border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
-  background:
-    linear-gradient(140deg, color-mix(in srgb, var(--accent-2) 24%, transparent), transparent 55%),
-    linear-gradient(220deg, color-mix(in srgb, var(--accent) 22%, transparent), transparent 52%),
-    color-mix(in srgb, var(--surface-soft) 88%, transparent);
-}
-
-.project-card:hover .project-media,
+.project-card:hover .project-thumb,
 .project-card:hover img {
   transform: scale(1.02);
   box-shadow: 0 14px 30px color-mix(in srgb, var(--accent-2) 20%, transparent);
+}
+
+.project-icon-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.project-icon-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  background: color-mix(in srgb, var(--surface-soft) 76%, transparent);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.project-icon-chip svg {
+  font-size: 0.9rem;
+}
+
+.project-stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.project-stat-chip {
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px dashed color-mix(in srgb, var(--accent-2) 44%, var(--border));
+  background: color-mix(in srgb, var(--surface-soft) 64%, transparent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.project-snippet {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  background: color-mix(in srgb, var(--surface-soft) 70%, transparent);
+  color: color-mix(in srgb, var(--text) 88%, var(--accent-2));
+  font-size: 0.79rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  overflow-x: auto;
 }
 
 .project-stack-tags {

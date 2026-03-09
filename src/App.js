@@ -367,6 +367,43 @@ const infraHighlights = [
   },
 ];
 
+function parseRepoOwnerAndName(repoUrl) {
+  try {
+    const url = new URL(repoUrl);
+    const parts = url.pathname.split("/").filter(Boolean);
+    if (parts.length < 2) return null;
+    return { owner: parts[0], repo: parts[1] };
+  } catch {
+    return null;
+  }
+}
+
+function getRepoThumbnailUrl(repoUrl) {
+  const parsed = parseRepoOwnerAndName(repoUrl);
+  if (!parsed) return "";
+  return `https://opengraph.githubassets.com/1/${parsed.owner}/${parsed.repo}`;
+}
+
+function getProjectStats(stack) {
+  const stats = [];
+  const lower = stack.join(" ").toLowerCase();
+  if (lower.includes("terraform") || lower.includes("cloudformation")) stats.push("IaC");
+  if (lower.includes("eks") || lower.includes("kubernetes") || lower.includes("docker")) stats.push("K8s");
+  if (lower.includes("aws") || lower.includes("cloud")) stats.push("Cloud");
+  if (lower.includes("argocd") || lower.includes("helm") || lower.includes("codepipeline")) stats.push("GitOps");
+  if (lower.includes("jenkins") || lower.includes("actions") || lower.includes("codebuild")) stats.push("CI/CD");
+  return stats.slice(0, 5);
+}
+
+function getProjectSnippet(stack) {
+  const lower = stack.join(" ").toLowerCase();
+  if (lower.includes("terraform")) return "terraform apply -auto-approve";
+  if (lower.includes("kubernetes") || lower.includes("eks")) return "kubectl rollout status deploy/app";
+  if (lower.includes("docker")) return "docker build -t app:latest .";
+  if (lower.includes("cloudwatch")) return "aws cloudwatch put-metric-alarm ...";
+  return "git push origin main";
+}
+
 function App() {
   const [theme, setTheme] = useState("light");
   const [infraOpen, setInfraOpen] = useState(false);
@@ -622,7 +659,34 @@ function App() {
           <div className="project-grid">
             {projects.map((project) => (
               <article className="project-card" key={project.title}>
-                <div className="project-media" aria-hidden="true" />
+                <img
+                  className="project-thumb"
+                  src={getRepoThumbnailUrl(project.repo)}
+                  alt={`${project.title} repository thumbnail`}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="project-icon-strip" aria-label={`${project.title} service icons`}>
+                  {project.stack.slice(0, 5).map((tech) => {
+                    const Icon = getSkillIcon(tech);
+                    return (
+                      <span className="project-icon-chip" key={`${project.title}-icon-${tech}`}>
+                        <Icon style={{ color: getSkillColor(tech) }} aria-hidden="true" />
+                        <span>{tech}</span>
+                      </span>
+                    );
+                  })}
+                </div>
+                <div className="project-stat-row" aria-label={`${project.title} quick stats`}>
+                  {getProjectStats(project.stack).map((tag) => (
+                    <span className="project-stat-chip" key={`${project.title}-stat-${tag}`}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <pre className="project-snippet" aria-label={`${project.title} example command`}>
+                  <code>{getProjectSnippet(project.stack)}</code>
+                </pre>
                 <h3>{project.title}</h3>
                 <p>{project.problem}</p>
                 <p>
