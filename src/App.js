@@ -158,6 +158,21 @@ const skillGroups = [
   },
 ];
 
+const certifications = [
+  {
+    title: "DevOps Certification",
+    issuer: "Udemy",
+    status: "Completed",
+    link: "https://www.udemy.com/certificate/UC-fa8b1aa9-61a9-4a21-8aa2-1160d0883388/",
+  },
+  {
+    title: "AWS Certification",
+    issuer: "Amazon Web Services",
+    status: "Ongoing Progress",
+    link: "",
+  },
+];
+
 const projects = [
   {
     title: "Terraform AWS VPC + EC2",
@@ -341,7 +356,7 @@ const navLinks = [
   { id: "education", label: "Education" },
   { id: "skills", label: "Skills" },
   { id: "projects", label: "Projects" },
-  { id: "blogs", label: "Blogs" },
+  { id: "certifications", label: "Certifications" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -839,25 +854,32 @@ function App() {
                       View Infrastructure
                     </button>
                   ) : null}
-                  {project.demo && (
-                    <a href={project.demo} target="_blank" rel="noreferrer">
-                      Live Demo
-                    </a>
-                  )}
                 </div>
               </article>
             ))}
           </div>
         </section>
 
-        <section id="blogs" className="section island reveal">
-          <h2>Blogs</h2>
-          <div className="blog-placeholder">
-            <h3>Technical blogs are coming soon</h3>
-            <p>
-              I will start publishing articles on DevOps practices, cloud operations, CI/CD patterns,
-              Kubernetes, and automation playbooks.
-            </p>
+        <section id="certifications" className="section island reveal">
+          <h2>Certifications</h2>
+          <div className="certifications-grid">
+            {certifications.map((cert) => (
+              <article className="cert-card" key={cert.title}>
+                <div className="cert-placeholder" aria-hidden="true">
+                  <span>{cert.issuer}</span>
+                </div>
+                <h3>{cert.title}</h3>
+                <p>{cert.issuer}</p>
+                <p>{cert.status}</p>
+                {cert.link ? (
+                  <a href={cert.link} target="_blank" rel="noreferrer">
+                    View Certificate
+                  </a>
+                ) : (
+                  <span className="cert-ongoing">In Progress</span>
+                )}
+              </article>
+            ))}
           </div>
         </section>
 
