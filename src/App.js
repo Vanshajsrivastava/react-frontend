@@ -53,6 +53,8 @@ const focusAreas = [
   "Linux Administration",
 ];
 
+const heroTech = ["AWS", "Terraform", "Docker", "Kubernetes", "CI/CD", "Linux"];
+
 const experiences = [
   {
     title: "DevOps Engineer Intern",
@@ -474,6 +476,18 @@ function App() {
               <p className="intro">{profile.intro}</p>
               <p className="location">{profile.location}</p>
 
+              <div className="hero-tech-row" aria-label="Key technologies">
+                {heroTech.map((item) => {
+                  const Icon = getSkillIcon(item);
+                  return (
+                    <span className="hero-tech-badge" key={item}>
+                      <Icon className="hero-tech-icon" style={{ color: getSkillColor(item) }} aria-hidden="true" />
+                      <span>{item}</span>
+                    </span>
+                  );
+                })}
+              </div>
+
               <div className="hero-cta">
                 <a className="btn btn-primary" href="#projects">
                   View Projects
@@ -608,11 +622,19 @@ function App() {
           <div className="project-grid">
             {projects.map((project) => (
               <article className="project-card" key={project.title}>
+                <div className="project-media" aria-hidden="true" />
                 <h3>{project.title}</h3>
                 <p>{project.problem}</p>
                 <p>
                   <strong>Stack:</strong> {project.stack.join(", ")}
                 </p>
+                <div className="project-stack-tags" aria-label={`${project.title} technologies`}>
+                  {project.stack.map((tech) => (
+                    <span className="project-stack-tag" key={`${project.title}-${tech}`}>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
                 <p>
                   <strong>Impact:</strong> {project.impact}
                 </p>
