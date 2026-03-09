@@ -1253,6 +1253,8 @@ footer {
 
   .hero-photo-wrap {
     justify-content: center;
+    order: -1;
+    margin-bottom: 8px;
   }
 
   .hero-photo-wrap::before {
