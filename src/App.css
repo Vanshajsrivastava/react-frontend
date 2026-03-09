@@ -5,9 +5,9 @@
   --space-3: 24px;
   --space-4: 32px;
   --space-5: 40px;
-  --bg: #f6efe3;
-  --surface: #fffaf0;
-  --surface-soft: #f8f0e2;
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-soft: #f8fafc;
   --text: #0f172a;
   --muted: #334155;
   --border: #e4d6c3;
@@ -216,17 +216,18 @@ main {
 .hero-photo-wrap::before {
   content: "";
   position: absolute;
-  width: 260px;
-  height: 260px;
+  width: 218px;
+  height: 218px;
   border-radius: 50%;
   background: radial-gradient(
     circle at 30% 20%,
-    color-mix(in srgb, var(--accent-2) 38%, transparent),
-    color-mix(in srgb, var(--accent) 26%, transparent) 56%,
+    color-mix(in srgb, var(--accent-2) 22%, transparent),
+    color-mix(in srgb, var(--accent) 16%, transparent) 60%,
     transparent 72%
   );
   z-index: 0;
-  filter: blur(0.2px);
+  opacity: 0.72;
+  filter: blur(0.4px);
 }
 
 .hero-photo {
@@ -242,7 +243,7 @@ main {
   object-fit: cover;
   object-position: center 22%;
   border-radius: 50%;
-  border: 2px solid color-mix(in srgb, var(--border) 75%, var(--accent-2));
+  border: 1px solid color-mix(in srgb, var(--border) 86%, var(--accent-2));
   box-shadow: var(--shadow);
   background: var(--surface);
   transition: transform 220ms ease, box-shadow 220ms ease;
@@ -379,6 +380,10 @@ main {
   box-shadow: var(--shadow);
 }
 
+.btn-primary:hover {
+  box-shadow: 0 14px 28px color-mix(in srgb, var(--accent-2) 30%, transparent);
+}
+
 .btn-secondary {
   color: var(--text);
   border: 1px solid var(--border);
@@ -392,10 +397,17 @@ main {
 
 .section {
   margin-top: 48px;
+  padding: 4px 0;
+}
+
+main > .section:nth-of-type(odd) {
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  border-radius: 20px;
 }
 
 main > .section:nth-of-type(even) {
-  background: color-mix(in srgb, var(--surface) 93%, transparent);
+  background: color-mix(in srgb, var(--surface-soft) 92%, transparent);
+  border-radius: 20px;
 }
 
 .island {
@@ -418,19 +430,21 @@ main > .section:nth-of-type(even) {
 }
 
 .island::before {
-  width: 160px;
-  height: 160px;
-  top: -72px;
-  right: -52px;
-  background: radial-gradient(circle, color-mix(in srgb, var(--accent-2) 28%, transparent), transparent 68%);
+  width: 128px;
+  height: 128px;
+  top: -54px;
+  right: -36px;
+  opacity: 0.45;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent-2) 18%, transparent), transparent 72%);
 }
 
 .island::after {
-  width: 140px;
-  height: 140px;
-  bottom: -68px;
-  left: -48px;
-  background: radial-gradient(circle, color-mix(in srgb, var(--accent-3) 24%, transparent), transparent 70%);
+  width: 112px;
+  height: 112px;
+  bottom: -56px;
+  left: -30px;
+  opacity: 0.4;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent-3) 16%, transparent), transparent 74%);
 }
 
 .island > * {
@@ -443,6 +457,7 @@ main > .section:nth-of-type(even) {
   font-size: 1.65rem;
   display: inline-block;
   position: relative;
+  color: var(--text);
 }
 
 .section h2::after {
@@ -535,11 +550,12 @@ main > .section:nth-of-type(even) {
   padding: var(--space-2);
   box-shadow: var(--shadow);
   border-left: 4px solid color-mix(in srgb, var(--accent-2) 72%, var(--accent));
-  transition: transform 170ms ease, box-shadow 170ms ease;
+  transition: transform 170ms ease, box-shadow 170ms ease, border-color 170ms ease;
 }
 
 .experience-card:hover {
   transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent-2) 40%, var(--border));
   box-shadow: 0 16px 34px color-mix(in srgb, var(--accent-2) 18%, rgba(2, 8, 23, 0.22));
 }
 
@@ -627,6 +643,7 @@ main > .section:nth-of-type(even) {
   width: 100%;
   border: none;
   background: transparent;
+  color: var(--text);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -638,6 +655,7 @@ main > .section:nth-of-type(even) {
 
 .skill-summary h3 {
   margin: 0;
+  color: var(--text);
 }
 
 .skill-chevron {
@@ -678,7 +696,7 @@ main > .section:nth-of-type(even) {
   border-radius: 12px;
   background: color-mix(in srgb, var(--surface-soft) 78%, transparent);
   box-shadow: 0 2px 8px color-mix(in srgb, var(--text) 6%, transparent);
-  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease, background 150ms ease;
 }
 
 .skill-item:hover {
@@ -700,6 +718,7 @@ main > .section:nth-of-type(even) {
   flex-direction: column;
   gap: 8px;
   min-height: 100%;
+  transition: transform 170ms ease, box-shadow 170ms ease, border-color 170ms ease;
 }
 
 .project-media,
@@ -740,6 +759,12 @@ main > .section:nth-of-type(even) {
   font-size: 0.78rem;
   font-weight: 700;
   color: var(--text);
+}
+
+.project-stack-tag:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent-2) 45%, var(--border));
+  background: color-mix(in srgb, var(--surface-soft) 66%, transparent);
 }
 
 .project-card a {
@@ -1065,8 +1090,9 @@ footer {
   }
 
   .hero-photo-wrap::before {
-    width: 240px;
-    height: 240px;
+    width: 210px;
+    height: 210px;
+    opacity: 0.64;
   }
 
   .skills-grid,
