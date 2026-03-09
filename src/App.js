@@ -399,6 +399,20 @@ const infraHighlights = [
   },
 ];
 
+function getCertificationVisual(cert) {
+  const normalized = `${cert.title} ${cert.issuer}`.toLowerCase();
+  if (normalized.includes("aws")) {
+    return {
+      icons: [FaAws, SiAmazons3, SiAmazoneks],
+      tags: ["AWS", "Cloud", "Foundational"],
+    };
+  }
+  return {
+    icons: [LuWorkflow, SiTerraform, SiJenkins],
+    tags: ["DevOps", "Automation", "CI/CD"],
+  };
+}
+
 function parseRepoOwnerAndName(repoUrl) {
   try {
     const url = new URL(repoUrl);
@@ -863,10 +877,32 @@ function App() {
         <section id="certifications" className="section island reveal">
           <h2>Certifications</h2>
           <div className="certifications-grid">
-            {certifications.map((cert) => (
+            {certifications.map((cert) => {
+              const visual = getCertificationVisual(cert);
+              return (
               <article className="cert-card" key={cert.title}>
-                <div className="cert-placeholder" aria-hidden="true">
-                  <span>{cert.issuer}</span>
+                <div
+                  className={`cert-placeholder ${cert.issuer === "Amazon Web Services" ? "cert-placeholder-aws" : ""}`}
+                  aria-hidden="true"
+                >
+                  <div className="cert-placeholder-icons">
+                    {visual.icons.map((Icon, idx) => (
+                      <span className="cert-icon-chip" key={`${cert.title}-icon-${idx}`}>
+                        <Icon />
+                      </span>
+                    ))}
+                  </div>
+                  <div className="cert-placeholder-main">
+                    <span className="cert-placeholder-label">{cert.issuer}</span>
+                    <strong>{cert.title}</strong>
+                  </div>
+                  <div className="cert-placeholder-tags">
+                    {visual.tags.map((tag) => (
+                      <span className="cert-tag" key={`${cert.title}-${tag}`}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
                 <h3>{cert.title}</h3>
                 <p>{cert.issuer}</p>
@@ -879,7 +915,8 @@ function App() {
                   <span className="cert-ongoing">In Progress</span>
                 )}
               </article>
-            ))}
+            );
+            })}
           </div>
         </section>
 
