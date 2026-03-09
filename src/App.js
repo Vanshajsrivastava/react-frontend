@@ -160,7 +160,7 @@ const skillGroups = [
 
 const certifications = [
   {
-    title: "DevOps Certification",
+    title: "Python Course Certification",
     issuer: "Udemy",
     status: "Completed",
     link: "https://www.udemy.com/certificate/UC-fa8b1aa9-61a9-4a21-8aa2-1160d0883388/",
