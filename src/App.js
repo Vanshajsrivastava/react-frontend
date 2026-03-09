@@ -659,13 +659,23 @@ function App() {
           <div className="project-grid">
             {projects.map((project) => (
               <article className="project-card" key={project.title}>
-                <img
-                  className="project-thumb"
-                  src={getRepoThumbnailUrl(project.repo)}
-                  alt={`${project.title} repository thumbnail`}
-                  loading="lazy"
-                  decoding="async"
-                />
+                <div className="project-thumb-wrap">
+                  <img
+                    className="project-thumb"
+                    src={getRepoThumbnailUrl(project.repo)}
+                    alt={`${project.title} repository thumbnail`}
+                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                      const fallback = e.currentTarget.nextElementSibling;
+                      if (fallback) fallback.style.display = "flex";
+                    }}
+                  />
+                  <div className="project-thumb-fallback" aria-hidden="true">
+                    <span>{project.title}</span>
+                  </div>
+                </div>
                 <div className="project-icon-strip" aria-label={`${project.title} service icons`}>
                   {project.stack.slice(0, 5).map((tech) => {
                     const Icon = getSkillIcon(tech);
