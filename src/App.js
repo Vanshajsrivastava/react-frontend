@@ -293,6 +293,7 @@ function getSkillIcon(item) {
   if (key.includes("gcp") || key.includes("google cloud")) return SiGooglecloud;
   if (key.includes("terraform")) return SiTerraform;
   if (key.includes("cloudformation")) return LuWorkflow;
+  if (key.includes("ci/cd") || key.includes("ci cd")) return LuWorkflow;
   if (key.includes("github actions")) return SiGithubactions;
   if (key.includes("jenkins")) return SiJenkins;
   if (key.includes("codepipeline")) return FaCodeBranch;
@@ -324,6 +325,8 @@ function getSkillColor(item) {
   if (key.includes("gcp") || key.includes("google cloud")) return "#4285f4";
   if (key.includes("terraform")) return "#7b42bc";
   if (key.includes("cloudformation")) return "#f59e0b";
+  if (key.includes("ci/cd") || key.includes("ci cd")) return "#22c55e";
+  if (key.includes("github actions")) return "#2088ff";
   if (key.includes("github")) return "#111827";
   if (key.includes("jenkins")) return "#d24939";
   if (key.includes("codepipeline")) return "#16a34a";
