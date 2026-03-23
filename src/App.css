@@ -697,6 +697,48 @@ main > .section:nth-of-type(even) {
   align-items: start;
 }
 
+.skills-toolbar {
+  margin-bottom: 18px;
+}
+
+.skills-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(100%, 420px);
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface) 88%, var(--section-bg-a));
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--text) 6%, transparent);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.skills-search:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 56%, var(--border));
+  box-shadow: 0 0 0 4px var(--ring);
+  transform: translateY(-1px);
+}
+
+.skills-search-icon {
+  color: var(--accent-2);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.skills-search input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+}
+
+.skills-search input::placeholder {
+  color: color-mix(in srgb, var(--muted) 80%, transparent);
+}
+
 .skills-column {
   display: grid;
   gap: var(--space-2);
@@ -811,6 +853,12 @@ main > .section:nth-of-type(even) {
 
 .skill-item-icon {
   font-size: 0.98rem;
+}
+
+.skills-empty {
+  margin-top: 18px;
+  color: var(--muted);
+  font-weight: 600;
 }
 
 .project-card p {
@@ -1490,6 +1538,10 @@ footer {
 
   .focus-grid {
     grid-template-columns: 1fr;
+  }
+
+  .skills-search {
+    width: 100%;
   }
 }
 

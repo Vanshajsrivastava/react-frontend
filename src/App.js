@@ -22,12 +22,13 @@ import {
   SiJenkins,
   SiGithubactions,
   SiGrafana,
+  SiGooglecloud,
   SiPrometheus,
   SiOpenai,
   SiSpacy,
 } from "react-icons/si";
 import { LuWorkflow } from "react-icons/lu";
-import { FiArrowRight, FiCloud } from "react-icons/fi";
+import { FiArrowRight, FiCloud, FiSearch } from "react-icons/fi";
 import { FaAws, FaLinux, FaCodeBranch, FaShieldAlt, FaNetworkWired, FaKey, FaBell, FaCogs } from "react-icons/fa";
 import { TbTopologyStarRing3 } from "react-icons/tb";
 import { MdSecurity } from "react-icons/md";
@@ -110,7 +111,7 @@ const education = [
 const skillGroups = [
   {
     title: "Cloud",
-    items: ["AWS (EC2, VPC, IAM, S3, CloudWatch, SNS)", "Azure"],
+    items: ["AWS (EC2, VPC, IAM, S3, CloudWatch, SNS)", "Azure", "Google Cloud Platform (GCP)"],
   },
   {
     title: "IaC",
@@ -284,6 +285,7 @@ function getSkillIcon(item) {
 
   if (key.includes("aws")) return FaAws;
   if (key.includes("azure")) return FiCloud;
+  if (key.includes("gcp") || key.includes("google cloud")) return SiGooglecloud;
   if (key.includes("terraform")) return SiTerraform;
   if (key.includes("cloudformation")) return LuWorkflow;
   if (key.includes("github actions")) return SiGithubactions;
@@ -314,6 +316,7 @@ function getSkillColor(item) {
 
   if (key.includes("aws")) return "#ff9900";
   if (key.includes("azure")) return "#0078d4";
+  if (key.includes("gcp") || key.includes("google cloud")) return "#4285f4";
   if (key.includes("terraform")) return "#7b42bc";
   if (key.includes("cloudformation")) return "#f59e0b";
   if (key.includes("github")) return "#111827";
@@ -558,6 +561,7 @@ function App() {
   const [selectedInfraProject, setSelectedInfraProject] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("about");
+  const [skillQuery, setSkillQuery] = useState("");
   const [openSkills, setOpenSkills] = useState(() =>
     Object.fromEntries(skillGroups.map((group) => [group.title, false]))
   );
@@ -622,13 +626,33 @@ function App() {
   }, []);
 
   const year = useMemo(() => new Date().getFullYear(), []);
+  const filteredSkillGroups = useMemo(() => {
+    const query = skillQuery.trim().toLowerCase();
+
+    if (!query) return skillGroups;
+
+    return skillGroups
+      .map((group) => {
+        const groupMatches = group.title.toLowerCase().includes(query);
+        const items = groupMatches
+          ? group.items
+          : group.items.filter((item) => item.toLowerCase().includes(query));
+
+        return {
+          ...group,
+          items,
+        };
+      })
+      .filter((group) => group.items.length > 0);
+  }, [skillQuery]);
+
   const skillColumns = useMemo(() => {
     const cols = [[], []];
-    skillGroups.forEach((group, index) => {
+    filteredSkillGroups.forEach((group, index) => {
       cols[index % 2].push(group);
     });
     return cols;
-  }, []);
+  }, [filteredSkillGroups]);
   const infraConfig = useMemo(
     () => getProjectInfrastructure(selectedInfraProject),
     [selectedInfraProject]
@@ -775,6 +799,19 @@ function App() {
 
         <section id="skills" className="section island reveal">
           <h2>Skills</h2>
+          <div className="skills-toolbar">
+            <label className="skills-search" htmlFor="skills-search">
+              <FiSearch className="skills-search-icon" aria-hidden="true" />
+              <input
+                id="skills-search"
+                type="search"
+                value={skillQuery}
+                onChange={(e) => setSkillQuery(e.target.value)}
+                placeholder="Search skills, platforms, tools..."
+                aria-label="Search skills"
+              />
+            </label>
+          </div>
           <div className="skills-columns">
             {skillColumns.map((column, colIndex) => (
               <div className="skills-column" key={`skills-col-${colIndex}`}>
@@ -783,7 +820,7 @@ function App() {
                     <button
                       type="button"
                       className="skill-summary"
-                      aria-expanded={openSkills[group.title]}
+                      aria-expanded={skillQuery.trim().length > 0 || openSkills[group.title]}
                       onClick={() =>
                         setOpenSkills((prev) => ({
                           ...prev,
@@ -794,7 +831,7 @@ function App() {
                       <h3>{group.title}</h3>
                       <IoChevronDown className="skill-chevron" aria-hidden="true" />
                     </button>
-                    <ul className={`skill-list ${openSkills[group.title] ? "open" : ""}`}>
+                    <ul className={`skill-list ${skillQuery.trim().length > 0 || openSkills[group.title] ? "open" : ""}`}>
                       {group.items.map((item) => (
                         <li key={item} className="skill-item">
                           {(() => {
@@ -816,6 +853,9 @@ function App() {
               </div>
             ))}
           </div>
+          {!filteredSkillGroups.length ? (
+            <p className="skills-empty">No matching skills found. Try AWS, Terraform, Kubernetes, or GCP.</p>
+          ) : null}
         </section>
 
         <section id="projects" className="section island reveal">
