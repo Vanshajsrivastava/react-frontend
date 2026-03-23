@@ -30,50 +30,38 @@ const iconRegistry = {
   linux: { Icon: FaLinux, color: "#f7c61d" },
 };
 
-function CoreStackSection({
-  id = "core-stack",
-  title = "Core Stack",
-  description = "Platforms and tools I use to design, automate, deploy, and operate modern cloud workloads.",
-  technologies = [],
-}) {
+function CoreStackSection({ id = "core-stack", title = "Core Stack", technologies = [] }) {
   const visibleTechnologies = technologies.filter((technology) => iconRegistry[technology.iconKey]);
+  const marqueeTechnologies = [...visibleTechnologies, ...visibleTechnologies];
 
   return (
-    <section id={id} className="section island reveal core-stack-section" aria-labelledby={`${id}-title`}>
-      <div className="core-stack-surface">
-        <div className="core-stack-header">
-          <p className="core-stack-eyebrow">Core Stack</p>
-          <h2 id={`${id}-title`}>{title}</h2>
-          <p>{description}</p>
-        </div>
+    <div id={id} className="core-stack-band reveal" role="region" aria-label={title}>
+      <div className="core-stack-band-head">
+        <span>{title}</span>
+      </div>
 
-        <ul className="core-stack-grid" aria-label="Primary technology stack">
-          {visibleTechnologies.map((technology, index) => {
+      <div className="core-stack-marquee" aria-live="off">
+        <div className="core-stack-track">
+          {marqueeTechnologies.map((technology, index) => {
             const { Icon, color } = iconRegistry[technology.iconKey];
 
             return (
-              <li
-                key={`${technology.iconKey}-${technology.label}`}
-                className="core-stack-item"
-                style={{
-                  "--brand-color": color,
-                  "--stack-delay": `${index * 65}ms`,
-                  "--float-duration": `${4.6 + (index % 4) * 0.35}s`,
-                  "--float-delay": `${(index % 5) * 0.24}s`,
-                }}
+              <div
+                key={`${technology.iconKey}-${technology.label}-${index}`}
+                className="core-stack-pill"
+                style={{ "--brand-color": color }}
+                aria-label={technology.label}
               >
-                <div className="core-stack-card" aria-label={technology.label}>
-                  <span className="core-stack-icon-shell" aria-hidden="true">
-                    <Icon className="core-stack-icon" />
-                  </span>
-                  <span className="core-stack-label">{technology.label}</span>
-                </div>
-              </li>
+                <span className="core-stack-pill-icon" aria-hidden="true">
+                  <Icon className="core-stack-icon" />
+                </span>
+                <span className="core-stack-pill-label">{technology.label}</span>
+              </div>
             );
           })}
-        </ul>
+        </div>
       </div>
-    </section>
+    </div>
   );
 }
 
