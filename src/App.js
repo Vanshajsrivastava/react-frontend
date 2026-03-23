@@ -561,7 +561,7 @@ function highlightExperienceText(text) {
 }
 
 function App() {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
   const [selectedInfraProject, setSelectedInfraProject] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("about");
@@ -572,7 +572,7 @@ function App() {
 
   useEffect(() => {
     const stored = localStorage.getItem("theme");
-    const initial = stored || "light";
+    const initial = stored || "dark";
     setTheme(initial);
     document.documentElement.setAttribute("data-theme", initial);
   }, []);

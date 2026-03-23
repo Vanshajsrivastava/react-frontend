@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0f766e" />
+    <meta name="theme-color" content="#020617" />
     <meta
       name="description"
       content="Vanshaj Srivastava - DevOps and Automation Engineer portfolio featuring cloud, IaC, CI/CD, and monitoring projects."
@@ -13,6 +13,16 @@
     <meta name="author" content="Vanshaj Srivastava" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem("theme") || "dark";
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (error) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      })();
+    </script>
     <title>Vanshaj Srivastava | DevOps Portfolio</title>
   </head>
   <body>
