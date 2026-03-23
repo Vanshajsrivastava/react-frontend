@@ -179,6 +179,29 @@ const certifications = [
 
 const projects = [
   {
+    title: "WikiRead AWS Platform & GitOps Delivery",
+    problem:
+      "Provision and operate the AWS platform for WikiRead with repeatable Terraform workflows, GitOps-based Kubernetes delivery, and safer rollout orchestration.",
+    stack: [
+      "Terraform",
+      "AWS VPC",
+      "Amazon EKS",
+      "RDS PostgreSQL",
+      "CodePipeline",
+      "CodeBuild",
+      "Argo CD",
+      "Argo Rollouts",
+      "Helm",
+      "Secrets Manager",
+      "CloudWatch",
+    ],
+    impact:
+      "Built a production-oriented delivery platform with private networking, approval-governed infrastructure changes, automated image promotion, and blue/green application releases on EKS.",
+    infrastructurePreset: "wikiread",
+    repo: "https://github.com/Vanshajsrivastava/Wikiread",
+    demo: "https://wikiread-lib.vercel.app/",
+  },
+  {
     title: "Terraform AWS VPC + EC2",
     problem: "Provision repeatable networking and compute environments quickly.",
     stack: ["Terraform", "AWS VPC", "EC2", "IAM", "SSM"],
@@ -208,33 +231,12 @@ const projects = [
   },
   {
     title: "NLP Interface for Rule-Based Reasoning (Dissertation)",
-    problem: "Convert unstructured text into explainable, rule-backed inferences in family and medical domains.",
-    stack: ["Python", "spaCy", "medSpaCy", "NetworkX", "Groove", "GPT-3.5"],
-    impact: "Built an end-to-end XAI pipeline from natural language input to graph reasoning and human-readable explanations.",
-    repo: "https://github.com/Vanshajsrivastava/nlp-rule-based-reasoning-engine",
-  },
-  {
-    title: "WikiRead AWS Platform & GitOps Delivery",
     problem:
-      "Provision and operate the AWS platform for WikiRead with repeatable Terraform workflows, GitOps-based Kubernetes delivery, and safer rollout orchestration.",
-    stack: [
-      "Terraform",
-      "AWS VPC",
-      "Amazon EKS",
-      "RDS PostgreSQL",
-      "CodePipeline",
-      "CodeBuild",
-      "Argo CD",
-      "Argo Rollouts",
-      "Helm",
-      "Secrets Manager",
-      "CloudWatch",
-    ],
+      "Convert unstructured clinical and family-domain text into explainable, rule-backed inferences through an end-to-end NLP and graph-reasoning pipeline.",
+    stack: ["Python", "spaCy", "medSpaCy", "NetworkX", "Groove", "GPT-3.5"],
     impact:
-      "Built a production-oriented delivery platform with private networking, approval-governed infrastructure changes, automated image promotion, and blue/green application releases on EKS.",
-    infrastructurePreset: "wikiread",
-    repo: "https://github.com/Vanshajsrivastava/Wikiread",
-    demo: "https://wikiread-lib.vercel.app/",
+      "Built an end-to-end XAI workflow that extracts entities and relationships, transforms them into graph structures, applies rule-based reasoning, and returns human-readable explanations for downstream analysis.",
+    repo: "https://github.com/Vanshajsrivastava/nlp-rule-based-reasoning-engine",
   },
 ];
 
