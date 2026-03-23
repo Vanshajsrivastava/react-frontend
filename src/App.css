@@ -1035,7 +1035,7 @@ main > .section:nth-of-type(even) {
 
 .project-card a {
   display: inline-block;
-  margin-top: 0.2rem;
+  margin-top: 0;
   font-weight: 700;
 }
 
@@ -1058,7 +1058,8 @@ main > .section:nth-of-type(even) {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 10px;
+  margin-top: auto;
+  padding-top: 14px;
 }
 
 .project-links a,
