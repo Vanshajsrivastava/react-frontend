@@ -8,10 +8,11 @@ import {
   SiHelm,
   SiJenkins,
   SiKubernetes,
+  SiLinux,
   SiPrometheus,
   SiTerraform,
 } from "react-icons/si";
-import { FaAws, FaLinux } from "react-icons/fa";
+import { FaAws } from "react-icons/fa";
 import { VscAzure } from "react-icons/vsc";
 
 const iconRegistry = {
@@ -27,7 +28,7 @@ const iconRegistry = {
   helm: { Icon: SiHelm, color: "#0f1689" },
   prometheus: { Icon: SiPrometheus, color: "#e6522c" },
   grafana: { Icon: SiGrafana, color: "#f46800" },
-  linux: { Icon: FaLinux, color: "#f7c61d" },
+  linux: { Icon: SiLinux, color: "#f7c61d" },
 };
 
 function CoreStackSection({ id = "core-stack", title = "Core Stack", technologies = [] }) {

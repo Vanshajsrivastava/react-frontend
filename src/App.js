@@ -15,6 +15,7 @@ import {
   SiGithub,
   SiHelm,
   SiKubernetes,
+  SiLinux,
   SiPostgresql,
   SiTerraform,
   SiPython,
@@ -31,7 +32,7 @@ import {
 } from "react-icons/si";
 import { LuWorkflow } from "react-icons/lu";
 import { FiArrowRight, FiCloud, FiSearch } from "react-icons/fi";
-import { FaAws, FaLinux, FaCodeBranch, FaShieldAlt, FaNetworkWired, FaKey, FaBell, FaCogs } from "react-icons/fa";
+import { FaAws, FaCodeBranch, FaShieldAlt, FaNetworkWired, FaKey, FaBell, FaCogs } from "react-icons/fa";
 import { TbTopologyStarRing3 } from "react-icons/tb";
 import { MdSecurity } from "react-icons/md";
 import { IoChevronDown } from "react-icons/io5";
@@ -304,7 +305,7 @@ function getSkillIcon(item) {
   if (key.includes("python")) return SiPython;
   if (key.includes("javascript")) return SiJavascript;
   if (key.includes("ruby")) return SiRuby;
-  if (key.includes("bash")) return FaLinux;
+  if (key.includes("linux") || key.includes("bash")) return SiLinux;
   if (key.includes("django")) return SiDjango;
   if (key.includes("rbac") || key.includes("authentication") || key.includes("authorization")) return MdSecurity;
   if (key.includes("spa")) return SiSpacy;
@@ -337,7 +338,7 @@ function getSkillColor(item) {
   if (key.includes("python")) return "#3776ab";
   if (key.includes("javascript")) return "#f7df1e";
   if (key.includes("ruby")) return "#cc342d";
-  if (key.includes("bash")) return "#4eaa25";
+  if (key.includes("linux") || key.includes("bash")) return "#f7c61d";
   if (key.includes("django")) return "#092e20";
   if (key.includes("rbac") || key.includes("authentication") || key.includes("authorization")) return "#ef4444";
   if (key.includes("openai") || key.includes("gpt")) return "#10a37f";
@@ -582,19 +583,47 @@ function App() {
   }, [theme]);
 
   useEffect(() => {
+    const elements = Array.from(document.querySelectorAll(".reveal"));
+    const revealVisibleElements = () => {
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+      elements.forEach((element) => {
+        const rect = element.getBoundingClientRect();
+        if (rect.top <= viewportHeight * 0.94 && rect.bottom >= 0) {
+          element.classList.add("is-visible");
+        }
+      });
+    };
+
+    if (!("IntersectionObserver" in window)) {
+      elements.forEach((element) => element.classList.add("is-visible"));
+      return undefined;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) entry.target.classList.add("is-visible");
         });
       },
-      { threshold: 0.14 }
+      { threshold: 0.08, rootMargin: "0px 0px -8% 0px" }
     );
 
-    const elements = document.querySelectorAll(".reveal");
-    elements.forEach((el) => observer.observe(el));
+    elements.forEach((element) => observer.observe(element));
+    revealVisibleElements();
 
-    return () => observer.disconnect();
+    const syncRevealState = () => window.requestAnimationFrame(revealVisibleElements);
+    const timeoutId = window.setTimeout(revealVisibleElements, 250);
+
+    window.addEventListener("hashchange", syncRevealState);
+    window.addEventListener("resize", syncRevealState);
+
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(timeoutId);
+      window.removeEventListener("hashchange", syncRevealState);
+      window.removeEventListener("resize", syncRevealState);
+    };
   }, []);
 
   useEffect(() => {
