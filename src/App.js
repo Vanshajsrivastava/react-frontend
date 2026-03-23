@@ -80,12 +80,13 @@ const experiences = [
     title: "IT Functional Consultant",
     company: "Andapp Digital",
     location: "Pune, India",
-    period: "May 2023 - Oct 2023",
+    period: "Nov 2022 - Nov 2023",
     highlights: [
       "Led full-lifecycle implementation of Oracle Fusion HCM across Core HR, Payroll, and Talent modules for enterprise users in India and the UAE.",
-      "Streamlined configuration and deployment by customizing processes with HDL files and Sandbox environments, reducing rollout errors and delivery time.",
+      "Automated SaaS configuration and data migration workflows using HDL scripting, reducing deployment errors across cloud-hosted Oracle Fusion HCM environments.",
+      "Managed sandbox and staging environments for iterative testing, applying environment lifecycle practices aligned with DevOps principles.",
       "Authored process documentation and training materials to improve knowledge transfer and onboarding efficiency.",
-      "Worked within Agile delivery models to collaborate continuously with business stakeholders and iterate quickly on SaaS configurations.",
+      "Collaborated within Agile delivery frameworks to iterate rapidly on cloud SaaS configurations and ensure continuous delivery of platform features.",
     ],
   },
 ];
