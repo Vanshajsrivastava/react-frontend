@@ -210,10 +210,25 @@ const projects = [
     repo: "https://github.com/Vanshajsrivastava/nlp-rule-based-reasoning-engine",
   },
   {
-    title: "WikiRead Knowledge Base Platform",
-    problem: "Provide a lightweight wiki-style platform where users can browse, create, and manage knowledge pages.",
-    stack: ["Django", "Python", "HTML/CSS", "JavaScript", "RBAC", "Authentication"],
-    impact: "Delivered a role-aware content platform with secure login flows and structured knowledge management.",
+    title: "WikiRead AWS Platform & GitOps Delivery",
+    problem:
+      "Provision and operate the AWS platform for WikiRead with repeatable Terraform workflows, GitOps-based Kubernetes delivery, and safer rollout orchestration.",
+    stack: [
+      "Terraform",
+      "AWS VPC",
+      "Amazon EKS",
+      "RDS PostgreSQL",
+      "CodePipeline",
+      "CodeBuild",
+      "Argo CD",
+      "Argo Rollouts",
+      "Helm",
+      "Secrets Manager",
+      "CloudWatch",
+    ],
+    impact:
+      "Built a production-oriented delivery platform with private networking, approval-governed infrastructure changes, automated image promotion, and blue/green application releases on EKS.",
+    infrastructurePreset: "wikiread",
     repo: "https://github.com/Vanshajsrivastava/Wikiread",
     demo: "https://wikiread-lib.vercel.app/",
   },
@@ -458,16 +473,16 @@ function getProjectSnippet(stack) {
 
 function hasInfrastructureView(project) {
   const joined = project.stack.join(" ").toLowerCase();
-  return cloudInfraKeywords.some((keyword) => joined.includes(keyword)) || project.title === "WikiRead Knowledge Base Platform";
+  return Boolean(project.infrastructurePreset) || cloudInfraKeywords.some((keyword) => joined.includes(keyword));
 }
 
 function getProjectInfrastructure(project) {
   if (!project) return null;
 
-  if (project.title === "WikiRead Knowledge Base Platform") {
+  if (project.infrastructurePreset === "wikiread") {
     return {
       mode: "wikiread",
-      title: "Wikiread Infrastructure",
+      title: "WikiRead Infrastructure",
       intro:
         "Production-grade multi-layer architecture for WikiRead on AWS.\nBuilt with Terraform, EKS, GitOps, approval-governed CI/CD, and observability-first operations.",
       flow: infraFlow,
