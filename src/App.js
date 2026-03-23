@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
+import CoreStackSection from "./components/CoreStackSection";
+import coreStackTechnologies from "./data/coreStackTechnologies";
 import {
   SiAmazoncloudwatch,
   SiAmazondynamodb,
@@ -370,6 +372,7 @@ const cloudInfraKeywords = [
 
 const navLinks = [
   { id: "about", label: "About" },
+  { id: "core-stack", label: "Core Stack" },
   { id: "experience", label: "Experience" },
   { id: "education", label: "Education" },
   { id: "skills", label: "Skills" },
@@ -758,6 +761,8 @@ function App() {
             ))}
           </div>
         </section>
+
+        <CoreStackSection technologies={coreStackTechnologies} />
 
         <section id="experience" className="section island reveal">
           <h2>Experience</h2>
