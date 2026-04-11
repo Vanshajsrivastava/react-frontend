@@ -244,8 +244,8 @@ main {
 .hero-photo-wrap::before {
   content: "";
   position: absolute;
-  width: 252px;
-  height: 252px;
+  width: 288px;
+  height: 288px;
   border-radius: 50%;
   background: radial-gradient(
     circle at 30% 20%,
@@ -259,17 +259,17 @@ main {
 }
 
 .hero-photo {
-  width: 212px;
-  height: 212px;
-  min-width: 212px;
-  min-height: 212px;
-  max-width: 212px;
-  max-height: 212px;
+  width: 244px;
+  height: 244px;
+  min-width: 244px;
+  min-height: 244px;
+  max-width: 244px;
+  max-height: 244px;
   display: block;
   overflow: hidden;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  object-position: center 18%;
+  object-position: center 22%;
   border-radius: 50%;
   border: 1px solid color-mix(in srgb, var(--border) 86%, var(--accent-2));
   box-shadow: var(--shadow);
@@ -1539,18 +1539,18 @@ footer {
   }
 
   .hero-photo-wrap::before {
-    width: 232px;
-    height: 232px;
+    width: 264px;
+    height: 264px;
     opacity: 0.58;
   }
 
   .hero-photo {
-    width: 196px;
-    height: 196px;
-    min-width: 196px;
-    min-height: 196px;
-    max-width: 196px;
-    max-height: 196px;
+    width: 220px;
+    height: 220px;
+    min-width: 220px;
+    min-height: 220px;
+    max-width: 220px;
+    max-height: 220px;
   }
 
   .experience-list {
