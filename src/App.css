@@ -258,7 +258,7 @@ main {
   filter: blur(0.4px);
 }
 
-.hero-photo {
+.hero-photo-frame {
   width: 244px;
   height: 244px;
   min-width: 244px;
@@ -268,19 +268,31 @@ main {
   display: block;
   overflow: hidden;
   aspect-ratio: 1 / 1;
-  object-fit: cover;
-  object-position: center 22%;
   border-radius: 50%;
   border: 1px solid color-mix(in srgb, var(--border) 86%, var(--accent-2));
   box-shadow: var(--shadow);
   background: var(--surface);
-  transition: transform 220ms ease, box-shadow 220ms ease;
+  transition: box-shadow 220ms ease;
   position: relative;
   z-index: 1;
 }
 
-.hero-photo:hover {
-  transform: scale(1.02);
+.hero-photo {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: 44% 20%;
+  transform: scale(2.62);
+  transform-origin: 44% 22%;
+  transition: transform 220ms ease;
+}
+
+.hero-photo-frame:hover .hero-photo {
+  transform: scale(2.68);
+}
+
+.hero-photo-frame:hover {
   box-shadow: 0 22px 48px color-mix(in srgb, var(--accent-2) 18%, rgba(2, 8, 23, 0.25));
 }
 
@@ -1544,13 +1556,19 @@ footer {
     opacity: 0.58;
   }
 
-  .hero-photo {
+  .hero-photo-frame {
     width: 220px;
     height: 220px;
     min-width: 220px;
     min-height: 220px;
     max-width: 220px;
     max-height: 220px;
+  }
+
+  .hero-photo {
+    object-position: 44% 19%;
+    transform: scale(2.42);
+    transform-origin: 44% 21%;
   }
 
   .experience-list {

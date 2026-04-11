@@ -758,19 +758,21 @@ function App() {
             </div>
 
             <div className="hero-photo-wrap" aria-label="Profile photo">
-              <img
-                className="hero-photo"
-                src="/profile-photo.jpg?v=2"
-                alt="Vanshaj Srivastava"
-                loading="lazy"
-                decoding="async"
-                width="720"
-                height="720"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = "/profile-placeholder.svg";
-                }}
-              />
+              <div className="hero-photo-frame">
+                <img
+                  className="hero-photo"
+                  src="/profile-photo.jpg?v=20260411"
+                  alt="Vanshaj Srivastava"
+                  loading="lazy"
+                  decoding="async"
+                  width="720"
+                  height="720"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = "/profile-placeholder.svg";
+                  }}
+                />
+              </div>
             </div>
           </div>
         </section>
