@@ -242,20 +242,7 @@ main {
 }
 
 .hero-photo-wrap::before {
-  content: "";
-  position: absolute;
-  width: 288px;
-  height: 288px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 30% 20%,
-    color-mix(in srgb, var(--accent-2) 22%, transparent),
-    color-mix(in srgb, var(--accent) 16%, transparent) 60%,
-    transparent 72%
-  );
-  z-index: 0;
-  opacity: 0.66;
-  filter: blur(0.4px);
+  content: none;
 }
 
 .hero-photo-frame {
@@ -269,10 +256,10 @@ main {
   overflow: hidden;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  border: 1px solid color-mix(in srgb, var(--border) 86%, var(--accent-2));
-  box-shadow: var(--shadow);
-  background: var(--surface);
-  transition: box-shadow 220ms ease;
+  border: none;
+  box-shadow: 0 20px 44px color-mix(in srgb, var(--text) 16%, rgba(2, 8, 23, 0.28));
+  background: transparent;
+  transition: transform 220ms ease, box-shadow 220ms ease;
   position: relative;
   z-index: 1;
 }
@@ -282,18 +269,19 @@ main {
   height: 100%;
   display: block;
   object-fit: cover;
-  object-position: 44% 20%;
-  transform: scale(2.62);
-  transform-origin: 44% 22%;
-  transition: transform 220ms ease;
+  object-position: center;
+  transform: none;
+  transition: transform 220ms ease, filter 220ms ease;
 }
 
 .hero-photo-frame:hover .hero-photo {
-  transform: scale(2.68);
+  transform: scale(1.03);
+  filter: saturate(1.02);
 }
 
 .hero-photo-frame:hover {
-  box-shadow: 0 22px 48px color-mix(in srgb, var(--accent-2) 18%, rgba(2, 8, 23, 0.25));
+  transform: translateY(-2px);
+  box-shadow: 0 24px 52px color-mix(in srgb, var(--text) 20%, rgba(2, 8, 23, 0.32));
 }
 
 .eyebrow {
@@ -1551,9 +1539,7 @@ footer {
   }
 
   .hero-photo-wrap::before {
-    width: 264px;
-    height: 264px;
-    opacity: 0.58;
+    content: none;
   }
 
   .hero-photo-frame {
@@ -1566,9 +1552,8 @@ footer {
   }
 
   .hero-photo {
-    object-position: 44% 19%;
-    transform: scale(2.42);
-    transform-origin: 44% 21%;
+    object-position: center;
+    transform: none;
   }
 
   .experience-list {
