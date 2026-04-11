@@ -246,12 +246,12 @@ main {
 }
 
 .hero-photo-frame {
-  width: 244px;
-  height: 244px;
-  min-width: 244px;
-  min-height: 244px;
-  max-width: 244px;
-  max-height: 244px;
+  width: 296px;
+  height: 296px;
+  min-width: 296px;
+  min-height: 296px;
+  max-width: 296px;
+  max-height: 296px;
   display: block;
   overflow: hidden;
   aspect-ratio: 1 / 1;
@@ -269,7 +269,7 @@ main {
   height: 100%;
   display: block;
   object-fit: cover;
-  object-position: center;
+  object-position: 52% 38%;
   transform: none;
   transition: transform 220ms ease, filter 220ms ease;
 }
@@ -1543,16 +1543,16 @@ footer {
   }
 
   .hero-photo-frame {
-    width: 220px;
-    height: 220px;
-    min-width: 220px;
-    min-height: 220px;
-    max-width: 220px;
-    max-height: 220px;
+    width: 252px;
+    height: 252px;
+    min-width: 252px;
+    min-height: 252px;
+    max-width: 252px;
+    max-height: 252px;
   }
 
   .hero-photo {
-    object-position: center;
+    object-position: 52% 38%;
     transform: none;
   }
 
