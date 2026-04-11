@@ -269,7 +269,7 @@ main {
   height: 100%;
   display: block;
   object-fit: cover;
-  object-position: 52% 38%;
+  object-position: 58% 38%;
   transform: none;
   transition: transform 220ms ease, filter 220ms ease;
 }
@@ -1552,7 +1552,7 @@ footer {
   }
 
   .hero-photo {
-    object-position: 52% 38%;
+    object-position: 58% 38%;
     transform: none;
   }
 
