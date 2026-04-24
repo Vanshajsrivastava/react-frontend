@@ -77,16 +77,16 @@ const experiences = [
     ],
   },
   {
-    title: "IT Functional Consultant",
+    title: "Cloud Engineer",
     company: "Andapp Digital",
     location: "Pune, India",
-    period: "Nov 2022 - Nov 2023",
+    period: "May 2022 - Dec 2023",
     highlights: [
-      "Led full-lifecycle implementation of Oracle Fusion HCM across Core HR, Payroll, and Talent modules for enterprise users in India and the UAE.",
-      "Automated SaaS configuration and data migration workflows using HDL scripting, reducing deployment errors across cloud-hosted Oracle Fusion HCM environments.",
-      "Managed sandbox and staging environments for iterative testing, applying environment lifecycle practices aligned with DevOps principles.",
-      "Authored process documentation and training materials to improve knowledge transfer and onboarding efficiency.",
-      "Collaborated within Agile delivery frameworks to iterate rapidly on cloud SaaS configurations and ensure continuous delivery of platform features.",
+      "Engineered and maintained scalable Azure IaaS and PaaS environments, using Terraform and Bicep to automate resource deployment and improve environment consistency.",
+      "Managed enterprise identity with Microsoft Entra ID (Azure AD), implementing granular RBAC policies to secure sensitive financial and legal workloads.",
+      "Configured and audited Virtual Networks (VNets), Network Security Groups (NSGs), and Azure Firewalls to support secure hybrid-cloud connectivity for global clients.",
+      "Architected centralized observability using Azure Monitor and Log Analytics, with automated alerting workflows that reduced incident response times by 25%.",
+      "Oversaw the end-to-end lifecycle of cloud resources, including automated patching, storage optimization, and FinOps-focused cost management to reduce operational overhead.",
     ],
   },
 ];
