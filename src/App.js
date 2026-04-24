@@ -751,9 +751,6 @@ function App() {
                 <a className="btn btn-primary" href="#projects">
                   View Projects
                 </a>
-                <a className="btn btn-secondary" href="/resume.pdf" target="_blank" rel="noreferrer">
-                  Download CV
-                </a>
               </div>
             </div>
 
