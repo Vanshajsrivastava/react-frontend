@@ -61,10 +61,10 @@ const heroTech = ["AWS", "Terraform", "Docker", "Kubernetes", "CI/CD", "Linux"];
 
 const experiences = [
   {
-    title: "DevOps Engineer Intern",
+    title: "DevOps Engineer",
     company: "AppInventiv",
     location: "Remote, UK",
-    period: "Sep 2025 - Present",
+    period: "May 2025 - March 2026",
     highlights: [
       "Executed end-to-end DevOps tasks independently across sandbox and pre-production environments.",
       "Built, maintained, and optimized 10+ CI/CD pipelines using Jenkins and GitHub Actions, reducing deployment time by 35%.",
